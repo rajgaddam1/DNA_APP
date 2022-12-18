@@ -453,55 +453,37 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     #st.download_button(label = "Download data as CSV",data = database_csv,file_name = 'Database_info.csv',mime = 'text/csv',)
     schemas_df = get_schema(snowflake_connector, sel_data)
     sc_list_data = schemas_df['name'].to_list()
-    sc_list_up = ['Select below available Schemas']
+    sc_list_up = ['-------------------', 'Create a Schema']
     sc_list_data_up = sc_list_up + sc_list_data
-
-    sel_schema = st.radio("Schemas Available",sc_list_data_up)
-
     
-    st.subheader('Create a new Schema')
-    if st.button('Create a new Schema', on_click = callback) or st.session_state.key:
-        create_schema(con, sel_data)
-    st.subheader('Create a Table/View')
-    if sel_schema != 'Select below available Schemas':
-        if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
-            ###############Copy Query
-            #agree3 = st.checkbox('Copy query from existing Table')
-            #if agree3:
-                
-               #tables_df_query = get_table(snowflake_connector, sel_data, sel_schema)
-                #show_query(con,sel_data,sel_schema,tables_df_query)
-                #query_df = show_query(snowflake_connector,sel_data,sel_schema, tables_df_query)
-                #st.dataframe(query_df)
-            
-            create_table(con)
-    else:
-        st.write('Select Schema to create table/view')
+    ########### Schema Sidebar#########
+    
+    with st.sidebar:
+        global sel_data
+        sel_schema = st.selectbox("Schemas", sc_list_data_up)
+        ################## Select Create Schema
+    if sel_schema == 'Create a Schema':
+            st.subheader("👇 Let's Create a new Schema in Snowflake")
+            if st.button('Create a new Schema', on_click = callback) or st.session_state.key:
+                create_schema(con, sel_data)
+   
+        ###########Table sidebar
         
-            
+    tables_df = get_table(snowflake_connector, sel_data, sel_schema)
+    list_table = tables_df['name'].to_list()
+    list_up1 = ['-------------------', 'Create a Table']
+    list_table_up = list_up1 + list_table
     
-    if sel_schema != 'Select below available Schemas':
-        tables_df = get_table(snowflake_connector, sel_data, sel_schema)
-        if len(tables_df) != 0:
-            sel_table = st.radio("Tables Available", tables_df.name)
-        else:
-            st.write('No tables available')
-#########
-with st.sidebar:
-    sc1 = st.selectbox("Schema",['-------------------'])
-    sc2 = st.selectbox("Table",['-------------------'])
-    sc3 = st.selectbox("View",['-------------------'])
-    sc4 = st.selectbox("Function",['-------------------'])
-    sc5 = st.selectbox("Sequences",['-------------------'])
-    
+    with st.sidebar:
+        global sel_table
+        sel_table = st.selectbox("Tables", list_table_up)
+####### Select Create Table ###########
+    if sel_schema == 'Create a Table':
+            st.subheader("👇 Let's Create a new Table in Snowflake")
+            if st.button('Create a new Table', on_click = callback) or st.session_state.key:
+                create_table(con)   
     
 
-
-
-
-
-
-     
 #############SIDEBAR_3(Roles)
 with st.sidebar:
     global sel_role
