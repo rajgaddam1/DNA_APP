@@ -1,0 +1,6 @@
+[my-config]
+
+query = 
+Create table user(
+ID, INT
+NAME, TEXT)
