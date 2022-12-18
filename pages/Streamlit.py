@@ -459,7 +459,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     ########### Schema Sidebar#########
     
     with st.sidebar:
-        global sel_data
+        global sel_schema
         sel_schema = st.selectbox("Schemas", sc_list_data_up)
         ################## Select Create Schema
     if sel_schema == 'Create a Schema':
