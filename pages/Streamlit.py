@@ -468,17 +468,17 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
                 create_schema(con, sel_data)
    
         ###########Table sidebar
-        
-    tables_df = get_table(snowflake_connector, sel_data, sel_schema)
-    list_table = tables_df['name'].to_list()
-    list_up1 = ['-------------------', 'Create a Table']
-    list_table_up = list_up1 + list_table
+    if sel_schema != 'Create a Schema' and sel_schema != '-------------------':  
+        tables_df = get_table(snowflake_connector, sel_data, sel_schema)
+        list_table = tables_df['name'].to_list()
+        list_up1 = ['-------------------', 'Create a Table']
+        list_table_up = list_up1 + list_table
     
-    with st.sidebar:
-        global sel_table
-        sel_table = st.selectbox("Tables", list_table_up)
+        with st.sidebar:
+            global sel_table
+            sel_table = st.selectbox("Tables", list_table_up)
 ####### Select Create Table ###########
-    if sel_schema == 'Create a Table':
+        if sel_table == 'Create a Table':
             st.subheader("👇 Let's Create a new Table in Snowflake")
             if st.button('Create a new Table', on_click = callback) or st.session_state.key:
                 create_table(con)   
