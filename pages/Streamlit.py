@@ -170,7 +170,7 @@ def create_schema(con, dbname):
 ##########  Function to DROP Schema
 def drop_schema(con, dbname, schema_name_del):
     #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
-    sql_cmd = 'DROP DATABASE IF EXISTS ' + str(dbname)+ '.'  + str(schema_name_del) + ';'
+    sql_cmd = 'DROP SCHEMA IF EXISTS ' + str(dbname)+ '.'  + str(schema_name_del) + ';'
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
@@ -185,7 +185,7 @@ def drop_schema(con, dbname, schema_name_del):
 ###Function to DROP table
 def drop_table(con, dbname, scname, table_name_del):
     #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
-    sql_cmd = 'DROP DATABASE IF EXISTS ' + str(dbname)+ '.'  + str(scname) + '.' + str(table_name_del)  +';'
+    sql_cmd = 'DROP TABLE IF EXISTS ' + str(dbname)+ '.'  + str(scname) + '.' + str(table_name_del)  +';'
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
