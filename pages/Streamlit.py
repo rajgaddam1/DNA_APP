@@ -379,6 +379,19 @@ def show_query(_connector) -> pd.DataFrame:
 def display_output(_connector,sql_final_cmd) -> pd.DataFrame:
         return pd.read_sql(sql_final_cmd, _connector)
 
+#############SHOW table Query
+def show_table_query(_connector, dbname, scname, tbname) -> pd.DataFrame:
+    #sel_table3 = st.radio("Table Available 1", tables_df_query.name)
+    #str1 = str(dbname)+ "." + str(scname) + "." + str(sel_table3)
+    #cmd1 = "select get_ddl('table'," + f" '{str1}' " + ",True) As Query"
+    str1 = str(dbname) + '.' + str(scname) + '.' + str(tbname)
+    cmd1 = "SELECT * FROM TABLE(DB1.PUBLIC.get_object_ddl1('table'," + f" '{str1}' "  +",true));"
+    #st.write(cmd1)
+    #cmd1 =  "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
+    #cmd1 = "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
+    return pd.read_sql(cmd1, _connector)
+
+
 
 
 
@@ -551,6 +564,11 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
             if st.button('Drop Table'):
                 drop_table(con, sel_data, sel_schema,sel_table)
+            st.subheader("👇 Do you want to Copy Query?")
+            agree3 = st.checkbox('Copy query of Table')
+            if agree3:
+                table_query_df = show_table_query(snowflake_connector, sel_data, sel_schema, sel_table)
+                st.dataframe(table_query_df)
             
 ##################VIEWS sidebar   
         view_df = get_views(snowflake_connector, sel_data, sel_schema)
