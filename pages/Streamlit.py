@@ -340,6 +340,9 @@ list_user_up = list_up3 + list_user
 
 user_csv = convert_df(users_df)
 
+
+
+
 ###################Function to display Query for copy
 
 def show_query(_connector) -> pd.DataFrame:
@@ -624,8 +627,8 @@ with st.sidebar:
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
     st.title('SNOWFLAKE CLIENT ')
-    sel_role2 = st.selectbox("Role ", ['DCM_USER', 'ACCOUNTADMIN', 'ORGADMIN', 'PUBLIC', 'SYSADMIN'])
-    sel_ware2 = st.selectbox("User ", ['DNAHCK_W', 'DNAHACK','SNOWFLAKE'])
+    sel_role2 = st.selectbox("Role ", users_df.name)
+    sel_ware2 = st.selectbox("Warehouse ", wareshouse.name)
     sql_query1 = st.text_input('Enter SQL')
     if st.button('Enter SQL'):
         pass
