@@ -310,6 +310,10 @@ def get_table(_connector, dbname, scname) -> pd.DataFrame:
     sql_cmd3 = 'SHOW TABLES IN '+ str(dbname) + '.' + str(scname) + ';'
     return pd.read_sql(sql_cmd3, _connector)
 
+####SHOW VIEWS
+def get_views(_connector, dbname, scname) -> pd.DataFrame:
+    sql_cmd4 = 'SHOW VIEWS IN '+ str(dbname) + '.' + str(scname) + ';'
+    return pd.read_sql(sql_cmd4, _connector)
 
 
 ######SHOW ROLES
@@ -495,7 +499,8 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if st.button('Create a new Schema', on_click = callback) or st.session_state.key:
                 create_schema(con, sel_data)
    
-        ###########Table sidebar
+##################Table sidebar
+
     if sel_schema != 'Create a Schema' and sel_schema != '-------------------':
         st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
         if st.button('Drop Schema'):
@@ -509,10 +514,10 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         with st.sidebar:
             global sel_table
             sel_table = st.selectbox("Tables", list_table_up)
-####### Select Create Table ###########
+        #### Select Create Table ####
         if sel_table == 'Create a Table':
-            st.subheader("👇 Let's Create a new Table in Snowflake")
-            if st.button('Create a new Table', on_click = callback) or st.session_state.key:
+            st.subheader("👇 Let's Create a new Table/View in Snowflake")
+            if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
                 create_table(con) 
         if sel_table != 'Create a Table' and sel_table != '-------------------':
             
@@ -520,7 +525,16 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if st.button('Drop Table'):
                 drop_table(con, sel_data, sel_schema,sel_table)
             
-    
+##################VIEWS sidebar   
+        view_df = get_views(snowflake_connector, sel_data, sel_schema)
+        list_view = view_df['name'].to_list()
+        list_up2 = ['-------------------', 'Create a Table/View']
+        list_view_up = list_up2 + list_view
+
+        with st.sidebar:
+            global sel_view
+            sel_view = st.selectbox("Views", list_view_up)
+ 
 
 #############SIDEBAR_3(Roles)
 with st.sidebar:
