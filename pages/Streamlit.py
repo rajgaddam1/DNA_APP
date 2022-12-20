@@ -639,9 +639,9 @@ if sql_window:
     #buff, col, buff2 = st.columns([1,3,1])
     #sql_query1 = col.text_input('Enter SQL')
     sql_query1 = st.text_area('Enter SQL', height= 250)
-    #sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
+    sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
     if st.button('Submit SQL'):
-        display_output_df = display_output(snowflake_connector,sql_query1)
+        display_output_df = display_output(snowflake_connector,sql_final_cmd)
         st.dataframe(display_output_df)
         
 
