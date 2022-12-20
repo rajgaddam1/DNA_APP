@@ -52,6 +52,23 @@ def get_connector() -> SnowflakeConnection:
     return con
 
 snowflake_connector = get_connector()
+
+######Snowflake connection for SQL Window
+
+def get_connector_sqlwindow() -> SnowflakeConnection:
+    """Create a connector to SnowFlake using credentials filled in Streamlit secrets"""
+    con = snowflake.connector.connect(
+    user = user,
+    password = password,
+    account = account)
+    return con
+
+snowflake_connector_sql_window = get_connector_sqlwindow()
+
+
+
+
+
 #####Show warehouses
 def get_wareshouse(_connector) -> pd.DataFrame:
     return pd.read_sql("SHOW WAREHOUSES;", _connector)
@@ -641,7 +658,7 @@ if sql_window:
     sql_query1 = st.text_area('Enter SQL', height= 250)
     sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
     if st.button('Submit SQL'):
-        display_output_df = display_output(snowflake_connector,sql_final_cmd)
+        display_output_df = display_output(snowflake_connector_sql_window,sql_final_cmd)
         st.dataframe(display_output_df)
         
 
