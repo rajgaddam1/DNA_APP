@@ -519,7 +519,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             #st.subheader("👇 Let's Create a new Table/View in Snowflake")
             #if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
                 #create_table(con) 
-        if sel_table != 'Create a Table' and sel_table != '-------------------':
+        if sel_table != 'Create a Table/View' and sel_table != '-------------------':
             
             st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
             if st.button('Drop Table'):
@@ -640,4 +640,6 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     sel_ware1 = st.selectbox("User", ['DNAHCK_W', 'DNAHACK','SNOWFLAKE'])
 
 
-       
+        
+
+    
