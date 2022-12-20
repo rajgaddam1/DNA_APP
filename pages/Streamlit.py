@@ -627,9 +627,11 @@ with st.sidebar:
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
     st.title('SNOWFLAKE CLIENT ')
-    sel_role2 = st.selectbox("Role ", users_df.name)
+    sel_role2 = st.selectbox("Role ", roles_df.name)
     sel_ware2 = st.selectbox("Warehouse ", wareshouse.name)
-    sql_query1 = st.text_input('Enter SQL')
+    buff, col, buff2 = st.beta_columns([1,3,1])
+    sql_query1 = col.text_input('Enter SQL')
+    #sql_query1 = st.text_input('Enter SQL')
     if st.button('Enter SQL'):
         pass
         
