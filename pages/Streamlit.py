@@ -631,7 +631,7 @@ if sql_window:
     sel_ware2 = st.selectbox("Warehouse ", wareshouse.name)
     #buff, col, buff2 = st.columns([1,3,1])
     #sql_query1 = col.text_input('Enter SQL')
-    sql_query1 = st.text_area('Enter SQL', height= 150)
+    sql_query1 = st.text_area('Enter SQL', height= 250)
     if st.button('Enter SQL'):
         pass
         
