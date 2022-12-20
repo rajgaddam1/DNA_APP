@@ -516,7 +516,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
                 create_table(con) 
         if sel_table != 'Create a Table' and sel_table != '-------------------':
             
-            st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
+            st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
             if st.button('Drop Table'):
                 drop_table(con, sel_data, sel_schema,sel_table)
             
