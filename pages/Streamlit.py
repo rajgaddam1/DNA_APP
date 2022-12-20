@@ -508,17 +508,17 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         
         tables_df = get_table(snowflake_connector, sel_data, sel_schema)
         list_table = tables_df['name'].to_list()
-        list_up1 = ['-------------------', 'Create a Table']
+        list_up1 = ['-------------------', 'Create a Table/View']
         list_table_up = list_up1 + list_table
     
         with st.sidebar:
             global sel_table
             sel_table = st.selectbox("Tables", list_table_up)
         #### Select Create Table ####
-        if sel_table == 'Create a Table':
-            st.subheader("👇 Let's Create a new Table/View in Snowflake")
-            if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
-                create_table(con) 
+        #if sel_table == 'Create a Table':
+            #st.subheader("👇 Let's Create a new Table/View in Snowflake")
+            #if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
+                #create_table(con) 
         if sel_table != 'Create a Table' and sel_table != '-------------------':
             
             st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
@@ -534,7 +534,15 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         with st.sidebar:
             global sel_view
             sel_view = st.selectbox("Views", list_view_up)
+            
+                #### Select Create Table #######
+                
+        if sel_table == 'Create a Table/View' or sel_view == 'Create a Table/View':
+            st.subheader("👇 Let's Create a new Table/View in Snowflake")
+            if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
+                create_table(con) 
  
+    
 
 #############SIDEBAR_3(Roles)
 with st.sidebar:
@@ -632,6 +640,4 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     sel_ware1 = st.selectbox("User", ['DNAHCK_W', 'DNAHACK','SNOWFLAKE'])
 
 
-        
-
-    
+       
