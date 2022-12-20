@@ -381,17 +381,15 @@ def display_output(_connector,sql_final_cmd) -> pd.DataFrame:
 
 #############SHOW table Query
 def show_table_query(_connector, dbname, scname, tbname) -> pd.DataFrame:
-    #sel_table3 = st.radio("Table Available 1", tables_df_query.name)
-    #str1 = str(dbname)+ "." + str(scname) + "." + str(sel_table3)
-    #cmd1 = "select get_ddl('table'," + f" '{str1}' " + ",True) As Query"
     str1 = str(dbname) + '.' + str(scname) + '.' + str(tbname)
     cmd1 = "SELECT * FROM TABLE(DB1.PUBLIC.get_object_ddl1('table'," + f" '{str1}' "  +",true));"
-    #st.write(cmd1)
-    #cmd1 =  "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
-    #cmd1 = "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
     return pd.read_sql(cmd1, _connector)
 
-
+############SHOW VIEW QUERY
+def show_view_query(_connector, dbname, scname, vname) -> pd.DataFrame:
+    str1 = str(dbname) + '.' + str(scname) + '.' + str(vname)
+    cmd1 = "SELECT * FROM TABLE(DB1.PUBLIC.get_object_ddl1('view'," + f" '{str1}' "  +",true));"
+    return pd.read_sql(cmd1, _connector)
 
 
 
@@ -586,6 +584,13 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             st.subheader("👇 Let's Create a new Table/View in Snowflake")
             if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
                 create_table(con) 
+                
+            st.subheader("👇 Do you want to Copy Query?")
+            agree4 = st.checkbox('Copy query of View')
+            if agree4:
+                view_query_df = show_view_query(snowflake_connector, sel_data, sel_schema, sel_view)
+                st.dataframe(view_query_df)                
+                
  
     
 
