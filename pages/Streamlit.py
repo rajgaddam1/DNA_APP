@@ -583,7 +583,9 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         if sel_table == 'Create a Table/View' or sel_view == 'Create a Table/View':
             st.subheader("👇 Let's Create a new Table/View in Snowflake")
             if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
-                create_table(con) 
+                create_table(con)
+        if sel_table != 'Create a Table/View' and sel_table != '-------------------':
+            
                 
             st.subheader("👇 Do you want to Copy Query?")
             agree4 = st.checkbox('Copy query of View')
