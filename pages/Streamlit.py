@@ -167,9 +167,37 @@ def create_schema(con, dbname):
         finally:
             cur.close()
         con.close()
-    
-
-        
+##########  Function to DROP Schema
+def drop_schema(con, dbname, schema_name_del):
+    #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
+    sql_cmd = 'DROP DATABASE IF EXISTS ' + str(dbname)+ '.'  + str(schema_name_del) + ';'
+    try:
+        cur = con.cursor()
+        cur.execute(sql_cmd)
+        st.success('Schema has been Dropped')
+    except Exception as e:
+        print(e)
+        #st.exception(e)
+        st.write('An error has occured please check logs')
+    finally:
+        cur.close()
+    con.close()
+###Function to DROP table
+def drop_table(con, dbname, scname, table_name_del):
+    #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
+    sql_cmd = 'DROP DATABASE IF EXISTS ' + str(dbname)+ '.'  + str(scname) + '.' + str(table_name_del)  +';'
+    try:
+        cur = con.cursor()
+        cur.execute(sql_cmd)
+        st.success('Table has been Dropped')
+    except Exception as e:
+        print(e)
+        #st.exception(e)
+        st.write('An error has occured please check logs')
+    finally:
+        cur.close()
+    con.close()
+  
 #################Function to DROP Databsase       
 def drop_database(con, database_name_del):
     #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
@@ -468,7 +496,11 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
                 create_schema(con, sel_data)
    
         ###########Table sidebar
-    if sel_schema != 'Create a Schema' and sel_schema != '-------------------':  
+    if sel_schema != 'Create a Schema' and sel_schema != '-------------------':
+        st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
+        if st.button('Drop Schema'):
+            drop_schema(con, sel_data, sel_schema)
+        
         tables_df = get_table(snowflake_connector, sel_data, sel_schema)
         list_table = tables_df['name'].to_list()
         list_up1 = ['-------------------', 'Create a Table']
@@ -481,7 +513,13 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         if sel_table == 'Create a Table':
             st.subheader("👇 Let's Create a new Table in Snowflake")
             if st.button('Create a new Table', on_click = callback) or st.session_state.key:
-                create_table(con)   
+                create_table(con) 
+        if sel_table != 'Create a Table' and sel_table != '-------------------':
+            
+            st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
+            if st.button('Drop Table'):
+                drop_table(con, sel_data, sel_schema,sel_table)
+            
     
 
 #############SIDEBAR_3(Roles)
