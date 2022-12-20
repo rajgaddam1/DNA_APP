@@ -356,6 +356,13 @@ def show_query(_connector) -> pd.DataFrame:
     #cmd1 =  "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
     #cmd1 = "select * from get_ddl('table'," + f" '{str1}' " + ",True) As Query"
         return pd.read_sql(cmd1, _connector)
+    
+
+######FUNCTION TO DISPLAY OUTPUT AS DATAFRAME
+def display_output(_connector,sql_final_cmd) -> pd.DataFrame:
+        return pd.read_sql(sql_final_cmd, _connector)
+
+
 
 
 ########Publish Report 1
@@ -632,8 +639,10 @@ if sql_window:
     #buff, col, buff2 = st.columns([1,3,1])
     #sql_query1 = col.text_input('Enter SQL')
     sql_query1 = st.text_area('Enter SQL', height= 250)
-    if st.button('Enter SQL'):
-        pass
+    sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
+    if st.button('Submit SQL'):
+        display_output_df = display_output(snowflake_connector,sql_final_cmd)
+        st.dataframe(display_output_df)
         
 
 
