@@ -667,8 +667,8 @@ if sql_window:
 #######HOME PAGE
 if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window :
     st.title('SNOWFLAKE CLIENT')
-    sel_role1 = st.selectbox("Role", ['DCM_USER', 'ACCOUNTADMIN', 'ORGADMIN', 'PUBLIC', 'SYSADMIN'])
-    sel_ware1 = st.selectbox("User", ['DNAHCK_W', 'DNAHACK','SNOWFLAKE'])
+    sel_role1 = st.selectbox("Role", roles_df.name)
+    sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
 
 
         
