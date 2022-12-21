@@ -15,6 +15,18 @@ account = os.environ.get('account')
 
 ############Check Log in
 
+
+
+try:
+    account_name_fin = st.session_state['account_name']
+    user_name1_fin = st.session_state['user_name1']
+    password1_fin = st.session_state['password1']
+    if user != user_name1_fin and password != password1_fin and account != account_name_fin:
+        st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
+        st.stop()  # App won't run anything after this line
+except:
+     st.warning("Please Login")
+     st.stop()
     
         
 ##To manage bug in sreamlit(Intialize button click)
@@ -683,10 +695,11 @@ with st.sidebar:
     global sql_window
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
-    st.title('SNOWFLAKE CLIENT ')
-    col1, col2 = st.columns([3, 3])
-    sel_role2 = col1.selectbox("Role ", roles_df.name)
-    sel_ware2 = col2.selectbox("Warehouse ", wareshouse.name)
+    col1, col2, col3 = st.columns([3, 2, 2])
+    col1.title('SNOWFLAKE CLIENT ')
+    #col1, col2 = st.columns([3, 3])
+    sel_role2 = col2.selectbox("Role ", roles_df.name)
+    sel_ware2 = col3.selectbox("Warehouse ", wareshouse.name)
     #buff, col, buff2 = st.columns([1,3,1])
     #sql_query1 = col.text_input('Enter SQL')
     sql_query1 = st.text_area('Enter SQL', height= 250)
