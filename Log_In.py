@@ -53,6 +53,17 @@ def intro():
     user_name1 = st.text_input('User Name',label_visibility="visible")
 
     password1 = st.text_input('Password',label_visibility="visible",type='password')
+    
+    if 'account_name' not in st.session_state:
+        st.session_state.account_name = account_name
+        
+    if 'account_name' not in st.session_state:
+        st.session_state.user_name1 = user_name1
+
+    if 'account_name' not in st.session_state:
+        st.session_state.password1 = password1        
+    
+    
     #agree = st.button('Submit')
     if st.button("Sign in"):
         if user == user_name1 and password == password1 and account == account_name:
