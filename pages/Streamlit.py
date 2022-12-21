@@ -26,6 +26,7 @@ try:
         st.stop()  # App won't run anything after this line
 except:
      st.warning("Please Login")
+     st.stop()
     
         
 ##To manage bug in sreamlit(Intialize button click)
