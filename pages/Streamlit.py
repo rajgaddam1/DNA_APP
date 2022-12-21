@@ -14,7 +14,9 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 ############Check Log in
-
+account_name_fin = ''
+user_name1_fin = ''
+password1_fin = ''
 account_name_fin = st.session_state['account_name']
 user_name1_fin = st.session_state['user_name1']
 password1_fin = st.session_state['password1']
