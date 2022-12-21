@@ -14,19 +14,18 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 ############Check Log in
-account_name_fin = ''
-user_name1_fin = ''
-password1_fin = ''
-account_name_fin = st.session_state['account_name']
-user_name1_fin = st.session_state['user_name1']
-password1_fin = st.session_state['password1']
+
+
 
 try:
+    account_name_fin = st.session_state['account_name']
+    user_name1_fin = st.session_state['user_name1']
+    password1_fin = st.session_state['password1']
     if user != user_name1_fin and password != password1_fin and account != account_name_fin:
         st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
         st.stop()  # App won't run anything after this line
 except:
-     st.warning("Time out, Please Login")
+     st.warning("Please Login")
     
         
 ##To manage bug in sreamlit(Intialize button click)
