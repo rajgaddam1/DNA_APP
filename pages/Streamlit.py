@@ -14,6 +14,7 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 ############Check Log in
+
     
         
 ##To manage bug in sreamlit(Intialize button click)
@@ -682,7 +683,8 @@ with st.sidebar:
     global sql_window
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
-    col1, col2, col3 = st.columns([5, 2, 2])
+    st.set_page_config(layout = "wide")
+    col1, col2, col3 = st.columns([3, 2, 2])
     col1.title('SNOWFLAKE CLIENT ')
     #col1, col2 = st.columns([3, 3])
     sel_role2 = col2.selectbox("Role ", roles_df.name)
