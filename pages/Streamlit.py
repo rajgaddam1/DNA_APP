@@ -685,7 +685,7 @@ with st.sidebar:
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
     st.title('SNOWFLAKE CLIENT ')
-    buff, col, buff2 = st.columns([1,1,10])
+    buff, col, buff2 = st.columns([5,3,10])
     sel_role2 = col.selectbox("Role ", roles_df.name)
     sel_ware2 = col.selectbox("Warehouse ", wareshouse.name)
     #buff, col, buff2 = st.columns([1,3,1])
