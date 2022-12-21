@@ -65,11 +65,6 @@ def get_connector_sqlwindow(role_sql, ware_sql) -> SnowflakeConnection:
     role = role_sql)
     return con
 
-snowflake_connector_sql_window = get_connector_sqlwindow()
-
-
-
-
 
 #####Show warehouses
 def get_wareshouse(_connector) -> pd.DataFrame:
