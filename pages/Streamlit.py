@@ -55,12 +55,14 @@ snowflake_connector = get_connector()
 
 ######Snowflake connection for SQL Window
 
-def get_connector_sqlwindow() -> SnowflakeConnection:
+def get_connector_sqlwindow(role_sql, ware_sql) -> SnowflakeConnection:
     """Create a connector to SnowFlake using credentials filled in Streamlit secrets"""
     con = snowflake.connector.connect(
     user = user,
     password = password,
-    account = account)
+    account = account,
+    warehouse =ware_sql,
+    role = role_sql)
     return con
 
 snowflake_connector_sql_window = get_connector_sqlwindow()
@@ -376,8 +378,15 @@ def show_query(_connector) -> pd.DataFrame:
     
 
 ######FUNCTION TO DISPLAY OUTPUT AS DATAFRAME
-def display_output(_connector,sql_final_cmd) -> pd.DataFrame:
-        return pd.read_sql(sql_final_cmd, _connector)
+def display_output(role_sql, ware_sql, query_sql) -> pd.DataFrame:
+    
+    connector1 = get_connector_sqlwindow(role_sql, ware_sql)
+    try:
+    
+        return pd.read_sql(query_sql, connector1)
+    
+    except:
+        st.error('Database does not exist or not Authorized')
 
 #############SHOW table Query
 def show_table_query(_connector, dbname, scname, tbname) -> pd.DataFrame:
@@ -681,7 +690,7 @@ if sql_window:
     sql_query1 = st.text_area('Enter SQL', height= 250)
     #sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
     if st.button('Submit SQL'):
-        display_output_df = display_output(snowflake_connector,sql_query1)
+        display_output_df = display_output(sel_role2, sel_ware2, sql_query1)
         st.dataframe(display_output_df)
         
 
