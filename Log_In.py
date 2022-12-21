@@ -62,6 +62,8 @@ def intro():
 
         else:
             st.write('Invalid Username or Password')
+            st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
+            st.stop()  # App won't run anything after this line
 
 page_names_to_funcs = {
     "Log in to snowflake": intro,
