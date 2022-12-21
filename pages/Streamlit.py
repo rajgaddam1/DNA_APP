@@ -17,17 +17,6 @@ account = os.environ.get('account')
 
 
 
-try:
-    account_name_fin = st.session_state['account_name']
-    user_name1_fin = st.session_state['user_name1']
-    password1_fin = st.session_state['password1']
-    if user != user_name1_fin and password != password1_fin and account != account_name_fin:
-        st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
-        st.stop()  # App won't run anything after this line
-except:
-     st.warning("Please Login")
-     st.stop()
-    
         
 ##To manage bug in sreamlit(Intialize button click)
 if 'key' not in st.session_state:
@@ -696,8 +685,9 @@ with st.sidebar:
     sql_window = st.checkbox('SQL Window ')
 if sql_window:
     st.title('SNOWFLAKE CLIENT ')
-    sel_role2 = st.selectbox("Role ", roles_df.name)
-    sel_ware2 = st.selectbox("Warehouse ", wareshouse.name)
+    buff, col, buff2 = st.columns([1,1,10])
+    sel_role2 = col.selectbox("Role ", roles_df.name)
+    sel_ware2 = col.selectbox("Warehouse ", wareshouse.name)
     #buff, col, buff2 = st.columns([1,3,1])
     #sql_query1 = col.text_input('Enter SQL')
     sql_query1 = st.text_area('Enter SQL', height= 250)
