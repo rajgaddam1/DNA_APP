@@ -7,7 +7,22 @@ import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 
-#############
+##############Snowflake Credentials
+
+user = os.environ.get('user')
+password = os.environ.get('password')
+account = os.environ.get('account')
+
+############Check Log in
+
+if user != user_name1 and password != password1 and account != account_name:
+    st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
+    st.stop()  # App won't run anything after this line
+
+
+
+
+
 ##To manage bug in sreamlit(Intialize button click)
 if 'key' not in st.session_state:
     st.session_state.key = False
@@ -29,10 +44,7 @@ def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8')
 
-##############Snowflake Credentials
-user = os.environ.get('user')
-password = os.environ.get('password')
-account = os.environ.get('account')
+
 
 ###Snow connection
 
