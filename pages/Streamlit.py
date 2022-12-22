@@ -7,7 +7,7 @@ import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 
-##############Snowflake Credentials
+##############Snowflake Credential
 
 user = os.environ.get('user')
 password = os.environ.get('password')
