@@ -249,26 +249,21 @@ def drop_database(con, database_name_del):
     
 ############################Create Table/View  
 
-def create_table(con):
-    select_opt = st.radio('Create', ['None','Table', 'View'])
-    if select_opt == 'Table':
-        sql_cmd4 = st.text_input('Enter SQL Query', 'create table <table_name> (<col1_name> <col1_type>)')
-    elif select_opt == 'View':
-        sql_cmd4 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;')
-    if select_opt != 'None':
-        if st.button('Create'):
-            try:
-                cur = con.cursor()
-                cur.execute(sql_cmd4)
-                st.success('Created')
-            except Exception as e:
-                print(e)
-                #st.exception(e)
-                st.write('Please Enter Valid Inputs')
-            finally:
-                cur.close()
-            con.close()
-            
+def create_table(con,dbname,scname):
+    str1 = "create table "+ str(dbname)+ "." + str(scname)+ "." + "<table_name>" + " (<col1_name> <col1_type>);"
+    sql_cmd4 = st.text_input('Enter SQL Query', str1)
+    if st.button('Create'):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_cmd4)
+            st.success('Created')
+        except Exception as e:
+            print(e)
+            #st.exception(e)
+            st.write('Please Enter Valid Inputs')
+        finally:
+            cur.close()
+        con.close()
 
 ###########Create View
 def create_view(con,dbname,scname):
@@ -590,18 +585,18 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         
         tables_df = get_table(snowflake_connector, sel_data, sel_schema)
         list_table = tables_df['name'].to_list()
-        list_up1 = ['-------------------', 'Create a Table/View']
+        list_up1 = ['-------------------', 'Create a Table']
         list_table_up = list_up1 + list_table
     
         with st.sidebar:
             global sel_table
             sel_table = st.selectbox("Tables", list_table_up)
         #### Select Create Table ####
-        #if sel_table == 'Create a Table':
-            #st.subheader("👇 Let's Create a new Table/View in Snowflake")
-            #if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
-                #create_table(con) 
-        if sel_table != 'Create a Table/View' and sel_table != '-------------------':
+        if sel_table == 'Create a Table':
+            st.subheader("👇 Let's Create a new Table in Snowflake")
+            if st.button('Create a new Table', on_click = callback) or st.session_state.key:
+                create_table(con, sel_data, sel_schema) 
+        if sel_table != 'Create a Table' and sel_table != '-------------------':
             
             st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
             if st.button('Drop Table'):
@@ -622,7 +617,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             global sel_view
             sel_view = st.selectbox("Views", list_view_up)
             
-                #### Select Create Table #######
+                #### Select Create View #######
                 
         if sel_view == 'Create a View':
             st.subheader("👇 Let's Create a new View in Snowflake")
