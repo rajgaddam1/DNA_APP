@@ -7,7 +7,7 @@ import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 
-##############Snowflake Credential
+##############Snowflake Credentials
 
 user = os.environ.get('user')
 password = os.environ.get('password')
@@ -268,6 +268,28 @@ def create_table(con):
             finally:
                 cur.close()
             con.close()
+            
+
+###########Create View
+def create_view(con,dbname,scname):
+    str2 = "create view "+ str(dbname)+ "." + str(scname)+ "." + "<view_name>" + " as <select_statement>;"
+    #sql_cmd5 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;')
+    sql_cmd5 = st.text_input('Enter SQL Query', str2)
+    if st.button('Create'):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_cmd5)
+            st.success('Created')
+        except Exception as e:
+            print(e)
+            #st.exception(e)
+            st.write('Please Enter Valid Inputs')
+        finally:
+            cur.close()
+        con.close()
+
+
+
 
 ################ SIDEBAR_1(WAREHOUSE)###########################
 with st.sidebar:
@@ -593,7 +615,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
 ##################VIEWS sidebar   
         view_df = get_views(snowflake_connector, sel_data, sel_schema)
         list_view = view_df['name'].to_list()
-        list_up2 = ['-------------------', 'Create a Table/View']
+        list_up2 = ['-------------------', 'Create a View']
         list_view_up = list_up2 + list_view
 
         with st.sidebar:
@@ -602,10 +624,10 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             
                 #### Select Create Table #######
                 
-        if sel_table == 'Create a Table/View' or sel_view == 'Create a Table/View':
-            st.subheader("👇 Let's Create a new Table/View in Snowflake")
-            if st.button('Create a new Table/View', on_click = callback) or st.session_state.key:
-                create_table(con)
+        if sel_view == 'Create a View':
+            st.subheader("👇 Let's Create a new View in Snowflake")
+            if st.button('Create a new View', on_click = callback) or st.session_state.key:
+                create_view(con, sel_data, sel_schema)
         if sel_view != 'Create a Table/View' and sel_view != '-------------------' :
             st.subheader("👇 Do you want to Copy Query?")
             agree4 = st.checkbox('Copy query of View')
