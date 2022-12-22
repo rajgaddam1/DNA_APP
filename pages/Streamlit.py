@@ -628,15 +628,13 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             st.subheader("👇 Let's Create a new View in Snowflake")
             if st.button('Create a new View', on_click = callback) or st.session_state.key:
                 create_view(con, sel_data, sel_schema)
-        if sel_view != 'Create a Table/View' and sel_view != '-------------------' :
+        if sel_view != 'Create a View' and sel_view != '-------------------' :
             st.subheader("👇 Do you want to Copy Query?")
             agree4 = st.checkbox('Copy query of View')
             if agree4:
                 view_query_df = show_view_query(snowflake_connector, sel_data, sel_schema, sel_view)
                 st.dataframe(view_query_df)                
                 
- 
-    
 
 #############SIDEBAR_3(Roles)
 with st.sidebar:
