@@ -4,3 +4,7 @@ backgroundColor="#f2f4f5"
 secondaryBackgroundColor="#c5e1f0"
 textColor="#050114"
 font="sans serif"
+[runner]
+magicEnabled = true
+fastReruns = false
+postScriptGC = true
