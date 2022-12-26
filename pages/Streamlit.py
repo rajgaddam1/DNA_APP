@@ -13,6 +13,10 @@ user = os.environ.get('user')
 password = os.environ.get('password')
 account = os.environ.get('account')
 
+st.set_page_config(
+    page_title="SNOWFLAKE CLIENT",
+)
+
 ############Check Log in
 
 
