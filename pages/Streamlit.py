@@ -6,22 +6,6 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
-##########Header and Footer
-hide_footer_style='''
-<style>
-reportview-container .main footer (visibility: hidden;)
-'''
-st.markdown(hide_footer_style, unsafe_allow_html=True)
-
-hide_menu_style= '''
-<style>
-#MainMenu (visibility: hidden;}
-</style>
-'''
-st.markdown(hide_menu_style, unsafe_allow_html=True)
-
-#st.sidebar.markdown(f"'<div class="markdown-text-container stText" style="width: 698px;"> <footer><p></p></footer><div style="font-size: 12px;">Snowflake Client v 0.1</div> <div style="font-size: 12px;">Infosys Technologies Limited</div></div>'", unsafe_allow_html=True)
-
 
 ##############Snowflake Credentials
 
@@ -29,7 +13,9 @@ user = os.environ.get('user')
 password = os.environ.get('password')
 account = os.environ.get('account')
 
-#st.set_page_config(page_title="SNOWFLAKE CLIENT",)
+st.set_page_config(
+    page_title="SNOWFLAKE CLIENT",
+)
 
 ############Check Log in
 
@@ -129,7 +115,7 @@ def create_ware(con):
             st.success('Warehouse has been created')
         except Exception as e:
             print(e)
-            st.exception(e)
+            st.error(e)
             st.write('An error has occured please check logs')
         finally:
             cur.close()
@@ -147,6 +133,7 @@ def drop_ware(con, ware_name_del):
     except Exception as e:
         print(e)
         #st.exception(e)
+        st.error(e)
         st.write('An error has occured please check logs')
     finally:
         cur.close()
@@ -171,6 +158,7 @@ def create_data(con):
             st.success('Database has been created')
         except Exception as e:
             print(e)
+            st.error(e)
             #st.exception(e)
             st.write('An error has occured please check logs')
         finally:
@@ -188,6 +176,7 @@ def clone_data(con):
             st.success('Database has been Cloned')
         except Exception as e:
             print(e)
+            st.error(e)
             #st.exception(e)
             st.write('An error has occured please check logs')
         finally:
@@ -212,6 +201,7 @@ def create_schema(con, dbname):
             st.success('Schema has been created')
         except Exception as e:
             print(e)
+            st.error(e)
             #st.exception(e)
             st.write('An error has occured please check logs')
         finally:
@@ -227,6 +217,7 @@ def drop_schema(con, dbname, schema_name_del):
         st.success('Schema has been Dropped')
     except Exception as e:
         print(e)
+        st.error(e)
         #st.exception(e)
         st.write('An error has occured please check logs')
     finally:
@@ -242,6 +233,7 @@ def drop_table(con, dbname, scname, table_name_del):
         st.success('Table has been Dropped')
     except Exception as e:
         print(e)
+        st.error(e)
         #st.exception(e)
         st.write('An error has occured please check logs')
     finally:
@@ -259,6 +251,7 @@ def drop_database(con, database_name_del):
         st.success('Database has been Dropped')
     except Exception as e:
         print(e)
+        st.error(e)
         #st.exception(e)
         st.write('An error has occured please check logs')
     finally:
@@ -277,6 +270,26 @@ def create_table(con,dbname,scname):
             st.success('Created')
         except Exception as e:
             print(e)
+            st.error(e)
+            #st.exception(e)
+            st.write('Please Enter Valid Inputs')
+        finally:
+            cur.close()
+        con.close()
+        
+        
+########Alter table
+def alter_table(con,dbname,scname,tbname):
+    str1 = "alter table "+ str(dbname)+ "." + str(scname) + "." + str(tbname) +"<command>;"
+    sql_cmd4 = st.text_input('Enter SQL Query', str1)
+    if st.button('Submit'):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_cmd4)
+            st.success('Done')
+        except Exception as e:
+            print(e)
+            st.error(e)
             #st.exception(e)
             st.write('Please Enter Valid Inputs')
         finally:
@@ -295,13 +308,31 @@ def create_view(con,dbname,scname):
             st.success('Created')
         except Exception as e:
             print(e)
+            st.error(e)
             #st.exception(e)
             st.write('Please Enter Valid Inputs')
         finally:
             cur.close()
         con.close()
 
-
+#####Alter View
+def alter_view(con,dbname,scname,vname):
+    str2 = "alter view "+ str(dbname)+ "." + str(scname) + "." + str(vname) +"<command>;"
+    #sql_cmd5 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;') 
+    sql_cmd5 = st.text_input('Enter SQL Query', str2)
+    if st.button('Submit'):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_cmd5)
+            st.success('Done')
+        except Exception as e:
+            print(e)
+            st.error(e)
+            #st.exception(e)
+            st.write('Please Enter Valid Inputs')
+        finally:
+            cur.close()
+        con.close()
 
 
 ################ SIDEBAR_1(WAREHOUSE)###########################
@@ -474,6 +505,7 @@ def create_role(con):
         except Exception as e:
             print(e)
             #st.exception(e)
+            st.error(e)
             st.write('An error has occured please check logs')
         finally:
             cur.close()
@@ -490,6 +522,7 @@ def drop_role(con, sel_role):
     except Exception as e:
         print(e)
         #st.exception(e)
+        st.error(e)
         st.write('An error has occured please check logs')
     finally:
         cur.close()
@@ -508,6 +541,7 @@ def create_user(con):
         except Exception as e:
             print(e)
             #st.exception(e)
+            st.error(e)
             st.write('An error has occured please check logs')
         finally:
             cur.close()
@@ -523,6 +557,7 @@ def drop_user(con, sel_user):
     except Exception as e:
         print(e)
         #st.exception(e)
+        st.error(e)
         st.write('An error has occured please check logs')
     finally:
         cur.close()
@@ -624,6 +659,14 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if agree3:
                 table_query_df = show_table_query(snowflake_connector, sel_data, sel_schema, sel_table)
                 st.dataframe(table_query_df)
+            st.subheader('👇 Do you want Alter '+ str(sel_table) +' Table?')
+            if st.button('Alter Table', on_click = callback) or st.session_state.key:
+                alter_table(con, sel_data, sel_schema,sel_table)
+                
+    
+                
+                
+                
             
 ##################VIEWS sidebar   
         view_df = get_views(snowflake_connector, sel_data, sel_schema)
