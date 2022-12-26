@@ -280,7 +280,7 @@ def create_table(con,dbname,scname):
         
 ########Alter table
 def alter_table(con,dbname,scname,tbname):
-    str1 = "alter table "+ str(dbname)+ "." + str(scname) + "." + str(tbname) +"<command>;"
+    str1 = "alter table "+ str(dbname)+ "." + str(scname) + "." + str(tbname) +" <command>;"
     sql_cmd4 = st.text_input('Enter SQL Query', str1)
     if st.button('Submit'):
         try:
@@ -317,7 +317,7 @@ def create_view(con,dbname,scname):
 
 #####Alter View
 def alter_view(con,dbname,scname,vname):
-    str2 = "alter view "+ str(dbname)+ "." + str(scname) + "." + str(vname) +"<command>;"
+    str2 = "alter view "+ str(dbname)+ "." + str(scname) + "." + str(vname) +" <command>;"
     #sql_cmd5 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;') 
     sql_cmd5 = st.text_input('Enter SQL Query', str2)
     if st.button('Submit'):
@@ -663,9 +663,6 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if st.button('Alter Table', on_click = callback) or st.session_state.key:
                 alter_table(con, sel_data, sel_schema,sel_table)
                 
-    
-                
-                
                 
             
 ##################VIEWS sidebar   
@@ -689,8 +686,13 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             agree4 = st.checkbox('Copy query of View')
             if agree4:
                 view_query_df = show_view_query(snowflake_connector, sel_data, sel_schema, sel_view)
-                st.dataframe(view_query_df)                
-                
+                st.dataframe(view_query_df)
+            st.subheader('👇 Do you want Alter '+ str(sel_view) +' View?')
+            if st.button('Alter View', on_click = callback) or st.session_state.key:
+                alter_view(con, sel_data, sel_schema,sel_view)
+
+
+
 
 #############SIDEBAR_3(Roles)
 with st.sidebar:
