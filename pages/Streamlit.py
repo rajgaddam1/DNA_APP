@@ -20,7 +20,7 @@ hide_menu_style= '''
 '''
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-st.sidebar.markdown(f"'<div class="markdown-text-container stText" style="width: 698px;"> <footer><p></p></footer><div style="font-size: 12px;">Snowflake Client v 0.1</div> <div style="font-size: 12px;">Infosys Technologies Limited</div></div>'", unsafe_allow_html=True)
+#st.sidebar.markdown(f"'<div class="markdown-text-container stText" style="width: 698px;"> <footer><p></p></footer><div style="font-size: 12px;">Snowflake Client v 0.1</div> <div style="font-size: 12px;">Infosys Technologies Limited</div></div>'", unsafe_allow_html=True)
 
 
 ##############Snowflake Credentials
