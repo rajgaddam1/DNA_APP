@@ -43,7 +43,6 @@ text-decoration: underline;
 a:hover,  a:active {
 color: red;
 background-color: transparent;
-text-decoration: underline;
 }
 .footer {
 position: fixed;
