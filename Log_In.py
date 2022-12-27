@@ -17,7 +17,7 @@ st.set_page_config(
 footer="""<style>
 a:link , a:visited{
 color: blue;
-background-color: transparent;
+background-color: #f2f4f5;
 }
 a:hover,  a:active {
 color: red;
