@@ -60,11 +60,6 @@ text-align: center;
 st.markdown(footer,unsafe_allow_html=True)
 
 
-
-
-
-
-
 ############Check Log in
 
 #try:
@@ -293,7 +288,26 @@ def drop_table(con, dbname, scname, table_name_del):
     finally:
         cur.close()
     con.close()
-  
+    
+    
+###Function to DROP View
+def drop_view(con, dbname, scname, view_name_del):
+    #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
+    sql_cmd = 'DROP VIEW IF EXISTS ' + str(dbname)+ '.'  + str(scname) + '.' + str(view_name_del)  +';'
+    try:
+        cur = con.cursor()
+        cur.execute(sql_cmd)
+        st.success('View has been Dropped')
+    except Exception as e:
+        print(e)
+        st.error(e)
+        #st.exception(e)
+        st.write('An error has occured please check logs')
+    finally:
+        cur.close()
+    con.close()
+
+
 #################Function to DROP Databsase       
 def drop_database(con, database_name_del):
     #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
@@ -674,7 +688,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     global sel_schema
     #global table_df
     st.subheader('👇 Do you want to Drop '+ str(sel_data) +' Database?')
-    if st.button('Drop Databse'):
+    if st.button('Drop Database'):
         
         drop_database(con, sel_data)
         #pass
@@ -757,6 +771,11 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if st.button('Create a new View', on_click = callback) or st.session_state.key:
                 create_view(con, sel_data, sel_schema)
         if sel_view != 'Create a View' and sel_view != '-------------------' :
+            
+            st.subheader('👇 Do you want to Drop '+ str(sel_view) +' View?')
+            if st.button('Drop View'):
+                drop_view(con, sel_data, sel_schema,sel_view)            
+            
             st.subheader("👇 Do you want to Copy Query?")
             agree4 = st.checkbox('Copy query of View')
             if agree4:
