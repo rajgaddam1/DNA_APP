@@ -13,8 +13,34 @@ st.set_page_config(
     page_title="SNOWFLAKE CLIENT",
     initial_sidebar_state="collapsed",
 )
+########Footer
+footer="""<style>
+a:link , a:visited{
+color: blue;
+background-color: transparent;
+}
+a:hover,  a:active {
+color: red;
+background-color: transparent;
+}
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: white;
+color: black;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Snowflake Client v 0.1 <a style='display: block; text-align: center;' href="https://www.infosys.com/" target="_blank">Infosys Technologies Limited</a></p>
+</div>
+"""
+st.markdown(footer,unsafe_allow_html=True)
 
 
+####Image 
 image = Image.open('Infosys_logo.JPG')
 image1 = image.resize((100, 60))
 st.image(image1)
