@@ -21,14 +21,14 @@ background-color: #f2f4f5;
 }
 a:hover,  a:active {
 color: red;
-background-color: transparent;
+background-color: #f2f4f5;
 }
 .footer {
 position: fixed;
 left: 0;
 bottom: 0;
 width: 100%;
-background-color: white;
+background-color: #f2f4f5;
 color: black;
 text-align: center;
 }
