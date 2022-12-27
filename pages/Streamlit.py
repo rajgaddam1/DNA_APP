@@ -256,7 +256,43 @@ def create_schema(con, dbname):
         finally:
             cur.close()
         con.close()
+        
+#####Create Function        
+def create_function(con, dbname):
+    sql_query1 = st.text_area('Enter SQL', height= 250)
+    if st.button('Create Function'):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_query1)
+            st.success('Function has been created')
+        except Exception as e:
+            print(e)
+            st.error(e)
+            #st.exception(e)
+            st.write('Please enter valid inputs')
+        finally:
+            cur.close()
+        con.close()
+###########Drop Function
+def drop_function(con, fun_name_del):
+    #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
+    sql_cmd = 'DROP FUNCTION IF EXISTS ' + str(fun_name_del) + ';'
+    try:
+        cur = con.cursor()
+        cur.execute(sql_cmd)
+        st.success('Schema has been Dropped')
+    except Exception as e:
+        print(e)
+        st.error(e)
+        #st.exception(e)
+        st.write('An error has occured please check logs')
+    finally:
+        cur.close()
+    con.close()
+
+
 ##########  Function to DROP Schema
+
 def drop_schema(con, dbname, schema_name_del):
     #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
     sql_cmd = 'DROP SCHEMA IF EXISTS ' + str(dbname)+ '.'  + str(schema_name_del) + ';'
@@ -469,6 +505,10 @@ def get_schema(_connector, dbname) -> pd.DataFrame:
     sql_cmd2 = 'SHOW SCHEMAS IN DATABASE ' + str(dbname) + ';'
     return pd.read_sql(sql_cmd2, _connector)
 
+####SHOW FUNCTIONS
+def get_function(_connector, dbname) -> pd.DataFrame:
+    sql_cmd2 = 'SHOW USER FUNCTIONS IN DATABASE ' + str(dbname) + ';'
+    return pd.read_sql(sql_cmd2, _connector)
 
 
 ####SHOW TABLES
@@ -787,8 +827,32 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
 
 
 
+###############SIDEBAR_3(Functions)
 
-#############SIDEBAR_3(Roles)
+if sel_data != 'Create a Database' and sel_data !=  '-------------------':
+    function_df = get_function(snowflake_connector, sel_data)
+    fn_list_data = function_df['name'].to_list()
+    fn_list_up = ['-------------------', 'Create a Function']
+    fn_list_data_up = fn_list_up + fn_list_data
+    
+    ########### Functions Sidebar#########
+    
+    with st.sidebar:
+        global sel_fun
+        sel_fun = st.selectbox("Functions", fn_list_data_up)
+        ################## Select Create Function
+    if sel_fun == 'Create a Function':
+            st.subheader("👇 Let's Create a new Function in Snowflake")
+            if st.button('Create a new Function', on_click = callback) or st.session_state.key:
+                create_function(con, sel_data)
+    if sel_fun != 'Create a Function' and sel_fun != '-------------------':
+        st.subheader('👇 Do you want to Drop '+ str(sel_fun) +' Function?')
+        if st.button('Drop Function'):
+            drop_function(con, sel_fun)
+
+
+
+#############SIDEBAR_4(Roles)
 with st.sidebar:
     global sel_role
     sel_role = st.selectbox("Role", list_role_up)
@@ -816,7 +880,7 @@ if sel_role != 'Create a Role' and sel_role != '-------------------':
     st.dataframe(roles_df[['name', 'comment']].loc[roles_df['name'] == sel_role])
     
 
-#######SIDEBAR_4(USERS)
+#######SIDEBAR_5(USERS)
 with st.sidebar:
     global sel_user
     sel_user = st.selectbox("User", list_user_up)
@@ -844,7 +908,7 @@ if sel_user != 'Create a User' and sel_user != '-------------------' :
 
     st.dataframe(users_df[['name', 'has_password']].loc[users_df['name'] == sel_user])
 
-#######SIDEBAR_4(USERS)
+#######SIDEBAR_6(Report)
 with st.sidebar:
     global sel_report
     sel_report = st.selectbox('Reports', ['-------------------', 'Get Publish Report'])
@@ -882,30 +946,13 @@ if sql_window:
         st.dataframe(display_output_df)
         
 
-##########Function Window
-with st.sidebar:
-    global fun_window
-    fun_window = st.checkbox('Function')
-if fun_window:
-    #st.set_page_config(layout = "wide",)
-    col1, col2, col3 = st.columns([3, 2, 2])
-    col1.title('SNOWFLAKE CLIENT ')
-    #col1, col2 = st.columns([3, 3])
-    sel_role3 = col2.selectbox("Role ", roles_df.name)
-    sel_ware3 = col3.selectbox("Warehouse ", wareshouse.name)
-    #buff, col, buff2 = st.columns([1,3,1])
-    #sql_query1 = col.text_input('Enter SQL')
-    sql_query2 = st.text_area('Enter SQL', height= 250)
-    #sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
-    if st.button('Submit SQL'):
-        function_create(sel_role3, sel_ware3, sql_query2)
 
 
 
 
     
 #######HOME PAGE
-if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window and not fun_window :
+if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window :
     st.title('SNOWFLAKE CLIENT')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
