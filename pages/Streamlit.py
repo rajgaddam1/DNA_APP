@@ -14,12 +14,25 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 st.set_page_config(
-    page_title="SNOWFLAKE CLIENT",
-)
+    page_title="SNOWFLAKE CLIENT",)
+
+##########Header and Footer
+hide_footer_style='''
+<style>
+reportview-container .main footer (visibility: hidden;)
+'''
+st.markdown(hide_footer_style, unsafe_allow_html=True)
+
+hide_menu_style= '''
+<style>
+#MainMenu (visibility: hidden;}
+</style>
+'''
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
 
 ############Check Log in
-
-
 
 #try:
     #account_name_fin = st.session_state['account_name']
@@ -587,11 +600,11 @@ if sel_data == 'Create a Database':
     file_name = 'Database_info.csv',
     mime = 'text/csv',)
     
-    st.subheader("👇 Do you want to Copy Query from existing objects")
-    agree3 = st.checkbox('Copy query from existing Table')
-    if agree3:
-        query_df = show_query(snowflake_connector)
-        st.dataframe(query_df)
+    #st.subheader("👇 Do you want to Copy Query from existing objects")
+    #agree3 = st.checkbox('Copy query from existing Table')
+    #if agree3:
+        #query_df = show_query(snowflake_connector)
+        #st.dataframe(query_df)
 
 
 ###Action after selecting Database    
@@ -795,8 +808,5 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('SNOWFLAKE CLIENT')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-
-
-        
 
     
