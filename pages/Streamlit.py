@@ -38,7 +38,6 @@ footer="""<style>
 a:link , a:visited{
 color: blue;
 background-color: transparent;
-text-decoration: underline;
 }
 a:hover,  a:active {
 color: red;
