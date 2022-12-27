@@ -88,7 +88,7 @@ def get_connector() -> SnowflakeConnection:
 
 snowflake_connector = get_connector()
 
-######Snowflake connection for SQL Window
+######Snowflake connection for SQL Window and Function
 
 def get_connector_sqlwindow(role_sql, ware_sql) -> SnowflakeConnection:
     """Create a connector to SnowFlake using credentials filled in Streamlit secrets"""
@@ -100,6 +100,14 @@ def get_connector_sqlwindow(role_sql, ware_sql) -> SnowflakeConnection:
     role = role_sql)
     return con
 
+def con_window(ware_sql,role_sql):
+    con_fun = snowflake.connector.connect(
+                    user = user,
+                    password = password,
+                    account = account,
+                    warehouse =ware_sql,
+                    role = role_sql)
+    return con_fun
 
 #####Show warehouses
 def get_wareshouse(_connector) -> pd.DataFrame:
@@ -479,6 +487,27 @@ def display_output(role_sql, ware_sql, query_sql) -> pd.DataFrame:
     
     except:
         st.error('Database does not exist or not Authorized')
+        
+
+######FUNCTION Creation in Snowflake
+def function_create(role_sql, ware_sql, query_sql):
+    con = con_window(ware_sql, role_sql)
+    if st.button('Create'):
+        try:
+            cur = con.cursor()
+            cur.execute(query_sql)
+            st.success('Created')
+        except Exception as e:
+            print(e)
+            st.error(e)
+            #st.exception(e)
+            st.write('Please Enter Valid Inputs')
+        finally:
+            cur.close()
+        con.close()
+
+
+
 
 #############SHOW table Query
 def show_table_query(_connector, dbname, scname, tbname) -> pd.DataFrame:
@@ -800,6 +829,26 @@ if sql_window:
         display_output_df = display_output(sel_role2, sel_ware2, sql_query1)
         st.dataframe(display_output_df)
         
+
+##########Function Window
+with st.sidebar:
+    global fun_window
+    fun_window = st.checkbox('Function')
+if fun_window:
+    #st.set_page_config(layout = "wide",)
+    col1, col2, col3 = st.columns([3, 2, 2])
+    col1.title('SNOWFLAKE CLIENT ')
+    #col1, col2 = st.columns([3, 3])
+    sel_role3 = col2.selectbox("Role ", roles_df.name)
+    sel_ware3 = col3.selectbox("Warehouse ", wareshouse.name)
+    #buff, col, buff2 = st.columns([1,3,1])
+    #sql_query1 = col.text_input('Enter SQL')
+    sql_query2 = st.text_area('Enter SQL', height= 250)
+    #sql_final_cmd = 'USE ' + str(sel_role2) + ';' + 'USE ' + str(sel_ware2) + ';' + str(sql_query1)
+    if st.button('Submit SQL'):
+        function_create(sel_role3, sel_ware3, sql_query2)
+
+
 
 
     
