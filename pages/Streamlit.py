@@ -9,9 +9,10 @@ from PIL import Image
 import altair as alt
 
 ######Load color and scale
+
 scale = alt.Scale(
-    domain=["sun", "fog", "drizzle", "rain", "snow"],
-    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4", "#9467bd"],
+    domain=["Warehouse", "Database", "Role", "User"],
+    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4"],
 )
 color = alt.Color("weather:N", scale=scale)
 
@@ -980,7 +981,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart = alt.Chart(chart_data).mark_bar().encode(
         y = 'Count',
         x = 'Object',
-        color=color,
+        color=alt.condition(color),
         )
     st.altair_chart(bar_chart, theme=None, use_container_width=True)
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
