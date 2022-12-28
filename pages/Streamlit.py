@@ -6,7 +6,7 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
-
+import altair as alt
 ##############Snowflake Credentials
 
 user = os.environ.get('user')
@@ -962,8 +962,10 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     d = [len(list_user), "User"]
 
 
-    chart_data = pd.DataFrame(
-    [a, b, c, d],
-    columns=["Count", "Object"])
-    st.bar_chart(x = chart_data["Object"], y =  chart_data["Count"])
+    chart_data = pd.DataFrame([a, b, c, d],columns=["Count", "Object"])
+    bar_chart = alt.Chart(chart_data).mark_bar().encode(
+        y = 'Count',
+        x = 'Object',)
+    st.altair_chart(bar_chart, theme=None, use_container_width=True)
+    #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
     
