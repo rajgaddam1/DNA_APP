@@ -366,7 +366,7 @@ def drop_database(con, database_name_del):
 
 def create_table(con,dbname,scname):
     str1 = "create table "+ str(dbname)+ "." + str(scname)+ "." + "<table_name>" + " (<col1_name> <col1_type>);"
-    sql_cmd4 = st.text_input('Enter SQL Query', str1)
+    sql_cmd4 = st.text_area('Enter SQL Query', str1, height = 250)
     if st.button('Create'):
         try:
             cur = con.cursor()
@@ -385,7 +385,7 @@ def create_table(con,dbname,scname):
 ########Alter table
 def alter_table(con,dbname,scname,tbname):
     str1 = "alter table "+ str(dbname)+ "." + str(scname) + "." + str(tbname) +" <command>;"
-    sql_cmd4 = st.text_input('Enter SQL Query', str1)
+    sql_cmd4 = st.text_area('Enter SQL Query', str1, height = 250)
     if st.button('Submit'):
         try:
             cur = con.cursor()
@@ -423,7 +423,7 @@ def create_view(con,dbname,scname):
 def alter_view(con,dbname,scname,vname):
     str2 = "alter view "+ str(dbname)+ "." + str(scname) + "." + str(vname) +" <command>;"
     #sql_cmd5 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;') 
-    sql_cmd5 = st.text_input('Enter SQL Query', str2)
+    sql_cmd5 = st.text_area('Enter SQL Query', str2, height = 250)
     if st.button('Submit'):
         try:
             cur = con.cursor()
