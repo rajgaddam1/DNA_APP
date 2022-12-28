@@ -978,7 +978,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
 
 
     chart_data = pd.DataFrame([a, b, c, d],columns=["Count", "Object"])
-    bar_chart = alt.Chart(chart_data).mark_bar().encode(
+    bar_chart = (alt.Chart(chart_data).mark_bar().encode(
         y = 'Count',
         x = 'Object',
         color=color,
