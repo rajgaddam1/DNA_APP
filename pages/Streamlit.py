@@ -14,7 +14,13 @@ scale = alt.Scale(
     range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4", "#9467bd"],
 )
 color = alt.Color("weather:N", scale=scale)
+
+# We create two selections:
+# - a brush that is active on the top panel
+# - a multi-click that is active on the bottom panel
+brush = alt.selection_interval(encodings=["x"])
 click = alt.selection_multi(encodings=["color"])
+
 ##############Snowflake Credentials
 
 user = os.environ.get('user')
