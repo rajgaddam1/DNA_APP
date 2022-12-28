@@ -965,5 +965,5 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     chart_data = pd.DataFrame(
     [[a, b, c, d]],
     columns=["Warehouse", "Database", "Role", "User"])
-    st.bar_chart(chart_data, y = 'Count')
+    st.bar_chart(chart_data)
     
