@@ -971,6 +971,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('SNOWFLAKE CLIENT')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
+    st.subheader("Number of Objects in Snowflake")
     a = [len(list_ware), "Warehouse"]
     b = [len(list_data), "Database"]
     c = [len(list_role), "Role"]
