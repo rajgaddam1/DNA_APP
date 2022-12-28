@@ -404,7 +404,7 @@ def alter_table(con,dbname,scname,tbname):
 def create_view(con,dbname,scname):
     str2 = "create view "+ str(dbname)+ "." + str(scname)+ "." + "<view_name>" + " as <select_statement>;"
     #sql_cmd5 = st.text_input('Enter SQL Query', 'create view <view_name> as <select_statement>;')
-    sql_cmd5 = st.text_input('Enter SQL Query', str2)
+    sql_cmd5 = st.text_area('Enter SQL Query', str2, height = 250)
     if st.button('Create'):
         try:
             cur = con.cursor()
