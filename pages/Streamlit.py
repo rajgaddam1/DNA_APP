@@ -981,7 +981,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart = alt.Chart(chart_data).mark_bar().encode(
         y = 'Count',
         x = 'Object',
-        color=alt.Color("weather:N", scale=scale),
+        color=alt.Color("Object:N", scale=scale),
         )
     st.altair_chart(bar_chart, theme=None, use_container_width=True)
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
