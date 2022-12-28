@@ -956,14 +956,14 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('SNOWFLAKE CLIENT')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-    a = len(list_ware)
-    b = len(list_data)
-    c = len(list_role)
-    d = len(list_user)
+    a = [len(list_ware), "Warehouse"]
+    b = [len(list_data), "Database"]
+    c = [len(list_role), "Role"]
+    d = [len(list_user), "User"]
 
 
     chart_data = pd.DataFrame(
-    [[a, b, c, d]],
-    columns=["Warehouse", "Database", "Role", "User"])
+    [a, b, c, d],
+    columns=["Count", "Object"])
     st.bar_chart(chart_data, x = ["Warehouse", "Database", "Role", "User"] )
     
