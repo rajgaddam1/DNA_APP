@@ -29,7 +29,7 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 st.set_page_config(
-    page_title="SNOWFLAKE CLIENT",)
+    page_title="Snowflake Client",)
 
 ##########Header and Footer
 hide_footer_style='''
@@ -176,7 +176,7 @@ def create_ware(con):
         try:
             cur = con.cursor()
             cur.execute(sql_cmd)
-            st.success('Warehouse has been created')
+            st.success(str(ware_name) + ' Warehouse has been created')
         except Exception as e:
             print(e)
             st.error(e)
@@ -193,7 +193,7 @@ def drop_ware(con, ware_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('Warehouse has been Dropped')
+        st.success(str(ware_name_del) + ' Warehouse has been dropped')
     except Exception as e:
         print(e)
         #st.exception(e)
@@ -219,7 +219,7 @@ def create_data(con):
         try:
             cur = con.cursor()
             cur.execute(sql_cmd)
-            st.success('Database has been created')
+            st.success(str(database_name) + ' Database has been created')
         except Exception as e:
             print(e)
             st.error(e)
@@ -237,7 +237,7 @@ def clone_data(con):
         try:
             cur = con.cursor()
             cur.execute(sql_cmd)
-            st.success('Database has been Cloned')
+            st.success(str(database_name1) + ' Database has been Cloned')
         except Exception as e:
             print(e)
             st.error(e)
@@ -262,7 +262,7 @@ def create_schema(con, dbname):
         try:
             cur = con.cursor()
             cur.execute(sql_cmd3)
-            st.success('Schema has been created')
+            st.success(str(schema_name) + ' Schema has been created')
         except Exception as e:
             print(e)
             st.error(e)
@@ -295,7 +295,7 @@ def drop_function(con, fun_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('Schema has been Dropped')
+        st.success(str(fun_name_del) + ' Function has been dropped')
     except Exception as e:
         print(e)
         st.error(e)
@@ -314,7 +314,7 @@ def drop_schema(con, dbname, schema_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('Schema has been Dropped')
+        st.success(str(schema_name_del) + ' Schema has been dropped')
     except Exception as e:
         print(e)
         st.error(e)
@@ -330,7 +330,7 @@ def drop_table(con, dbname, scname, table_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('Table has been Dropped')
+        st.success(str(table_name_del) + ' Table has been dropped')
     except Exception as e:
         print(e)
         st.error(e)
@@ -348,7 +348,7 @@ def drop_view(con, dbname, scname, view_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('View has been Dropped')
+        st.success(str(view_name_del) + ' View has been dropped')
     except Exception as e:
         print(e)
         st.error(e)
@@ -367,7 +367,7 @@ def drop_database(con, database_name_del):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd)
-        st.success('Database has been Dropped')
+        st.success(str(database_name_del) + ' Database has been dropped')
     except Exception as e:
         print(e)
         st.error(e)
@@ -461,7 +461,7 @@ with st.sidebar:
 ###Action after selecting Warehouse
 if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
     st.subheader('👇 Do you want to Drop '+ str(sel_ware) +' Warehouse? 🗑️')
-    if st.button('Drop warehouse'):
+    if st.button('Drop Warehouse'):
         
         drop_ware(con, sel_ware)
 
@@ -482,7 +482,7 @@ if sel_ware == 'Create a Warehouse':
     st.title('Snowflake Hackathon ❄️')
     st.subheader("👇 Let's Create a new Warehouse in Snowflake")
     
-    if st.button('Create a new warehouse', on_click = callback) or st.session_state.key:
+    if st.button('Create a new Warehouse', on_click = callback) or st.session_state.key:
         create_ware(con)
     st.subheader("👇 Click here to Download full Information about Warehouses available")
     st.download_button(
@@ -645,7 +645,7 @@ def create_role(con):
         try:
             cur = con.cursor()
             cur.execute(sql_cmd5)
-            st.success('Role has been created')
+            st.success(str(role_name) + ' Role has been created')
         except Exception as e:
             print(e)
             #st.exception(e)
@@ -662,7 +662,7 @@ def drop_role(con, sel_role):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd5)
-        st.success('Role has been Dropped')
+        st.success(str(sel_role) + ' Role has been dropped')
     except Exception as e:
         print(e)
         #st.exception(e)
@@ -697,7 +697,7 @@ def drop_user(con, sel_user):
     try:
         cur = con.cursor()
         cur.execute(sql_cmd5)
-        st.success('User has been Dropped')
+        st.success(str(sel_user) + ' User has been dropped')
     except Exception as e:
         print(e)
         #st.exception(e)
