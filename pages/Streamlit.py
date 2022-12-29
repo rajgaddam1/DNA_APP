@@ -948,7 +948,7 @@ with st.sidebar:
 if sql_window:
     #st.set_page_config(layout = "wide",)
     col1, col2, col3 = st.columns([3, 2, 2])
-    col1.title('SNOWFLAKE CLIENT ')
+    col1.title('Snowflake Client ')
     #col1, col2 = st.columns([3, 3])
     sel_role2 = col2.selectbox("Role ", roles_df.name)
     sel_ware2 = col3.selectbox("Warehouse ", wareshouse.name)
@@ -968,7 +968,7 @@ if sql_window:
     
 #######HOME PAGE
 if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window :
-    st.title('SNOWFLAKE CLIENT')
+    st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
     st.subheader("Number of Objects in Snowflake")
