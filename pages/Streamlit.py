@@ -460,7 +460,7 @@ with st.sidebar:
 
 ###Action after selecting Warehouse
 if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
-    #st.subheader('👇 Do you want to Drop '+ str(sel_ware) +' Warehouse? 🗑️')
+    st.subheader('Click the below button to drop '+ str(sel_ware) +' Warehouse')
     if st.button('Drop Warehouse'):
         
         drop_ware(con, sel_ware)
@@ -480,11 +480,11 @@ if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
 #### Homepage Create Warehouse
 if sel_ware == 'Create a Warehouse':
     st.title('Snowflake Hackathon')
-    #st.subheader("👇 Let's Create a new Warehouse in Snowflake")
+    st.subheader("Click the below button to create a new Warehouse in Snowflake")
     
     if st.button('Create a new Warehouse', on_click = callback) or st.session_state.key:
         create_ware(con)
-    #st.subheader("👇 Click here to Download full Information about Warehouses available")
+    st.subheader("Click the below to Download full Information about Warehouses available")
     st.download_button(
     label = "Download existing Warehouse data as CSV",
     data = ware_csv,
@@ -711,22 +711,22 @@ def drop_user(con, sel_user):
 #############SIDEBAR_2(DATABASES)
 with st.sidebar:
     global sel_data
-    sel_data = st.selectbox("Databases", list_data_up)
+    sel_data = st.selectbox("**Databases**", list_data_up)
     
 ###Create Databse Page
 if sel_data == 'Create a Database':
-    st.subheader("👇 Let's Create a new Database in Snowflake")
+    #st.subheader("👇 Let's Create a new Database in Snowflake")
     
     if st.button('Create a new database', on_click = callback) or st.session_state.key:
         create_data(con)
     
-    st.subheader('👇 Do you want to Clone Existing Database? 🗑️')
+    #st.subheader('👇 Do you want to Clone Existing Database? 🗑️')
     agree1 = st.checkbox('Clone Database')
     if agree1:
         clone_data(con)
-    st.subheader("👇 Click here to Download full Information about Databases available")
+    #st.subheader("👇 Click here to Download full Information about Databases available")
     st.download_button(
-    label = "Download data as CSV",
+    label = "Download Existing Database information as CSV",
     data = database_csv,
     file_name = 'Database_info.csv',
     mime = 'text/csv',)
@@ -742,7 +742,7 @@ if sel_data == 'Create a Database':
 if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     global sel_schema
     #global table_df
-    st.subheader('👇 Do you want to Drop '+ str(sel_data) +' Database?')
+    #st.subheader('👇 Do you want to Drop '+ str(sel_data) +' Database?')
     if st.button('Drop Database'):
         
         drop_database(con, sel_data)
@@ -766,17 +766,17 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     
     with st.sidebar:
         global sel_schema
-        sel_schema = st.selectbox("Schemas", sc_list_data_up)
+        sel_schema = st.selectbox("**Schemas**", sc_list_data_up)
         ################## Select Create Schema
     if sel_schema == 'Create a Schema':
-            st.subheader("👇 Let's Create a new Schema in Snowflake")
+            #st.subheader("👇 Let's Create a new Schema in Snowflake")
             if st.button('Create a new Schema', on_click = callback) or st.session_state.key:
                 create_schema(con, sel_data)
    
 ##################Table sidebar
 
     if sel_schema != 'Create a Schema' and sel_schema != '-------------------':
-        st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
+        #st.subheader('👇 Do you want to Drop '+ str(sel_schema) +' Schema?')
         if st.button('Drop Schema'):
             drop_schema(con, sel_data, sel_schema)
         
@@ -787,23 +787,23 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     
         with st.sidebar:
             global sel_table
-            sel_table = st.selectbox("Tables", list_table_up)
+            sel_table = st.selectbox("**Tables**", list_table_up)
         #### Select Create Table ####
         if sel_table == 'Create a Table':
-            st.subheader("👇 Let's Create a new Table in Snowflake")
+            #st.subheader("👇 Let's Create a new Table in Snowflake")
             if st.button('Create a new Table', on_click = callback) or st.session_state.key:
                 create_table(con, sel_data, sel_schema) 
         if sel_table != 'Create a Table' and sel_table != '-------------------':
             
-            st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
+            #st.subheader('👇 Do you want to Drop '+ str(sel_table) +' Table?')
             if st.button('Drop Table'):
                 drop_table(con, sel_data, sel_schema,sel_table)
-            st.subheader("👇 Do you want to Copy Query?")
+            #st.subheader("👇 Do you want to Copy Query?")
             agree3 = st.checkbox('Copy query of Table')
             if agree3:
                 table_query_df = show_table_query(snowflake_connector, sel_data, sel_schema, sel_table)
                 st.dataframe(table_query_df)
-            st.subheader('👇 Do you want Alter '+ str(sel_table) +' Table?')
+            #st.subheader('👇 Do you want Alter '+ str(sel_table) +' Table?')
             if st.button('Alter Table', on_click = callback) or st.session_state.key:
                 alter_table(con, sel_data, sel_schema,sel_table)
                 
@@ -817,26 +817,26 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
 
         with st.sidebar:
             global sel_view
-            sel_view = st.selectbox("Views", list_view_up)
+            sel_view = st.selectbox("**Views**", list_view_up)
             
                 #### Select Create View #######
                 
         if sel_view == 'Create a View':
-            st.subheader("👇 Let's Create a new View in Snowflake")
+            #st.subheader("👇 Let's Create a new View in Snowflake")
             if st.button('Create a new View', on_click = callback) or st.session_state.key:
                 create_view(con, sel_data, sel_schema)
         if sel_view != 'Create a View' and sel_view != '-------------------' :
             
-            st.subheader('👇 Do you want to Drop '+ str(sel_view) +' View?')
+            #st.subheader('👇 Do you want to Drop '+ str(sel_view) +' View?')
             if st.button('Drop View'):
                 drop_view(con, sel_data, sel_schema,sel_view)            
             
-            st.subheader("👇 Do you want to Copy Query?")
+            #st.subheader("👇 Do you want to Copy Query?")
             agree4 = st.checkbox('Copy query of View')
             if agree4:
                 view_query_df = show_view_query(snowflake_connector, sel_data, sel_schema, sel_view)
                 st.dataframe(view_query_df)
-            st.subheader('👇 Do you want Alter '+ str(sel_view) +' View?')
+            #st.subheader('👇 Do you want Alter '+ str(sel_view) +' View?')
             if st.button('Alter View', on_click = callback) or st.session_state.key:
                 alter_view(con, sel_data, sel_schema,sel_view)
 
@@ -854,14 +854,14 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     
     with st.sidebar:
         global sel_fun
-        sel_fun = st.selectbox("Functions", fn_list_data_up)
+        sel_fun = st.selectbox("**Functions**", fn_list_data_up)
         ################## Select Create Function
     if sel_fun == 'Create a Function':
-            st.subheader("👇 Let's Create a new Function in Snowflake")
+            #st.subheader("👇 Let's Create a new Function in Snowflake")
             if st.button('Create a new Function', on_click = callback) or st.session_state.key:
                 create_function(con, sel_data)
     if sel_fun != 'Create a Function' and sel_fun != '-------------------':
-        st.subheader('👇 Do you want to Drop '+ str(sel_fun) +' Function?')
+        #st.subheader('👇 Do you want to Drop '+ str(sel_fun) +' Function?')
         if st.button('Drop Function'):
             drop_function(con, sel_fun)
 
