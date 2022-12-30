@@ -870,7 +870,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
 #############SIDEBAR_4(Roles)
 with st.sidebar:
     global sel_role
-    sel_role = st.selectbox("Role", list_role_up)
+    sel_role = st.selectbox("**Role**", list_role_up)
     
 if sel_role == 'Create a Role':
     
@@ -898,7 +898,7 @@ if sel_role != 'Create a Role' and sel_role != '-------------------':
 #######SIDEBAR_5(USERS)
 with st.sidebar:
     global sel_user
-    sel_user = st.selectbox("User", list_user_up)
+    sel_user = st.selectbox("**User**", list_user_up)
     
 if sel_user == 'Create a User':
     
@@ -926,7 +926,7 @@ if sel_user != 'Create a User' and sel_user != '-------------------' :
 #######SIDEBAR_6(Report)
 with st.sidebar:
     global sel_report
-    sel_report = st.selectbox('Reports', ['-------------------', 'Get Publish Report'])
+    sel_report = st.selectbox('**Reports**', ['-------------------', 'Get Publish Report'])
 
 if sel_report == 'Get Publish Report':
     st.subheader('Publish Report')
@@ -944,7 +944,7 @@ if sel_report == 'Get Publish Report':
 ########SQL Window
 with st.sidebar:
     global sql_window
-    sql_window = st.checkbox('SQL Window ')
+    sql_window = st.checkbox('**SQL Window** ')
 if sql_window:
     #st.set_page_config(layout = "wide",)
     col1, col2, col3 = st.columns([3, 2, 2])
