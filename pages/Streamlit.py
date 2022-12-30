@@ -456,7 +456,7 @@ def alter_view(con,dbname,scname,vname):
 
 ################ SIDEBAR_1(WAREHOUSE)###########################
 with st.sidebar:
-    sel_ware = st.selectbox("Warehouse",list_ware_up)
+    sel_ware = st.selectbox("Warehouse and bold.",list_ware_up)
 
 ###Action after selecting Warehouse
 if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
