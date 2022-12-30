@@ -275,7 +275,7 @@ def create_schema(con, dbname):
 #####Create Function        
 def create_function(con, dbname):
     sql_query1 = st.text_area('Enter SQL', height= 250)
-    if st.button('Create Function'):
+    if st.button('Create '):
         try:
             cur = con.cursor()
             cur.execute(sql_query1)
