@@ -482,11 +482,11 @@ if sel_ware == 'Create a Warehouse':
     st.title('Snowflake Hackathon')
     st.subheader("Click the below button to create a new Warehouse in Snowflake")
     
-    if st.button('Create a new Warehouse', on_click = callback) or st.session_state.key:
+    if st.button('Create Warehouse', on_click = callback) or st.session_state.key:
         create_ware(con)
     st.subheader("Click the below to Download full Information about Warehouses available")
     st.download_button(
-    label = "Download existing Warehouse data as CSV",
+    label = "Download",
     data = ware_csv,
     file_name = 'Warehouse_info.csv',
     mime = 'text/csv',
