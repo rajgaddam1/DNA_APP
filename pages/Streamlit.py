@@ -456,7 +456,7 @@ def alter_view(con,dbname,scname,vname):
 
 ################ SIDEBAR_1(WAREHOUSE)###########################
 with st.sidebar:
-    sel_ware = st.selectbox("Warehouse is : bold.",list_ware_up)
+    sel_ware = st.selectbox("**[Warehouse]**",list_ware_up)
 
 ###Action after selecting Warehouse
 if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
@@ -479,7 +479,7 @@ if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
 
 #### Homepage Create Warehouse
 if sel_ware == 'Create a Warehouse':
-    st.title('Snowflake Hackathon ❄️')
+    st.title('Snowflake Hackathon')
     st.subheader("👇 Let's Create a new Warehouse in Snowflake")
     
     if st.button('Create a new Warehouse', on_click = callback) or st.session_state.key:
