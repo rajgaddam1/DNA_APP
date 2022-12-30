@@ -80,7 +80,7 @@ def intro():
     password1 = st.text_input('Password',label_visibility="visible",type='password')
         
     #agree = st.button('Submit')
-    if st.button("Sign in"):
+    if st.button("Sign In"):
         
         if 'account_name' not in st.session_state:
             st.session_state['account_name'] = account_name
