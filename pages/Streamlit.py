@@ -715,18 +715,18 @@ with st.sidebar:
     
 ###Create Databse Page
 if sel_data == 'Create a Database':
-    st.subheader("Click the below button to Create a new Database in Snowflake")
+    st.subheader("Click the below button to create a new Database in Snowflake")
     
-    if st.button('Create a new database', on_click = callback) or st.session_state.key:
+    if st.button('Create database', on_click = callback) or st.session_state.key:
         create_data(con)
     
-    st.subheader('Click the below button to Clone Existing Database')
+    st.subheader('Click the below checkbox to Clone Existing Database')
     agree1 = st.checkbox('Clone Database')
     if agree1:
         clone_data(con)
-    st.subheader("Click the below button to Download full Information about Databases available")
+    st.subheader("Click the below button to download full information about Databases available")
     st.download_button(
-    label = "Download Existing Database information as CSV",
+    label = "Download",
     data = database_csv,
     file_name = 'Database_info.csv',
     mime = 'text/csv',)
@@ -742,7 +742,7 @@ if sel_data == 'Create a Database':
 if sel_data != 'Create a Database' and sel_data !=  '-------------------':
     global sel_schema
     #global table_df
-    st.subheader('Click the below button to drop '+ str(sel_data) +' Database?')
+    st.subheader('Click the below button to drop '+ str(sel_data) +' Database')
     if st.button('Drop Database'):
         
         drop_database(con, sel_data)
@@ -770,13 +770,13 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         ################## Select Create Schema
     if sel_schema == 'Create a Schema':
             st.subheader("Click the below button to create a new Schema in Snowflake")
-            if st.button('Create New Schema', on_click = callback) or st.session_state.key:
+            if st.button('Create Schema', on_click = callback) or st.session_state.key:
                 create_schema(con, sel_data)
    
 ##################Table sidebar
 
     if sel_schema != 'Create a Schema' and sel_schema != '-------------------':
-        st.subheader('Click the below button to drop '+ str(sel_schema) +' Schema?')
+        st.subheader('Click the below button to drop '+ str(sel_schema) +' Schema')
         if st.button('Drop Schema'):
             drop_schema(con, sel_data, sel_schema)
         
@@ -795,15 +795,15 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
                 create_table(con, sel_data, sel_schema) 
         if sel_table != 'Create a Table' and sel_table != '-------------------':
             
-            st.subheader('Click the below button to Drop '+ str(sel_table) +' Table?')
+            st.subheader('Click the below button to Drop '+ str(sel_table) +' Table')
             if st.button('Drop Table'):
                 drop_table(con, sel_data, sel_schema,sel_table)
-            st.subheader("Click the below Checkbox to Copy Query?")
+            st.subheader("Click the below Checkbox to Copy Query")
             agree3 = st.checkbox('Copy query of Table')
             if agree3:
                 table_query_df = show_table_query(snowflake_connector, sel_data, sel_schema, sel_table)
                 st.dataframe(table_query_df)
-            #st.subheader('👇 Do you want Alter '+ str(sel_table) +' Table?')
+            st.subheader('Click the below button Alter '+ str(sel_table) +' Table')
             if st.button('Alter Table', on_click = callback) or st.session_state.key:
                 alter_table(con, sel_data, sel_schema,sel_table)
                 
