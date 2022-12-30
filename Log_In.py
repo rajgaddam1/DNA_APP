@@ -43,7 +43,7 @@ st.markdown(footer,unsafe_allow_html=True)
 image = Image.open('Infosys_logo.JPG')
 image1 = image.resize((100, 60))
 st.image(image1)
-st.title("Sign in to Snowflake")
+st.title("Sign In To Snowflake")
 
 
 
