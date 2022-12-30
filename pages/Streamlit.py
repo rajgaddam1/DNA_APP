@@ -456,11 +456,11 @@ def alter_view(con,dbname,scname,vname):
 
 ################ SIDEBAR_1(WAREHOUSE)###########################
 with st.sidebar:
-    sel_ware = st.selectbox("**[Warehouse]**",list_ware_up)
+    sel_ware = st.selectbox("**Warehouse**",list_ware_up)
 
 ###Action after selecting Warehouse
 if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
-    st.subheader('👇 Do you want to Drop '+ str(sel_ware) +' Warehouse? 🗑️')
+    #st.subheader('👇 Do you want to Drop '+ str(sel_ware) +' Warehouse? 🗑️')
     if st.button('Drop Warehouse'):
         
         drop_ware(con, sel_ware)
@@ -480,13 +480,13 @@ if sel_ware != 'Create a Warehouse' and sel_ware !=  '-------------------':
 #### Homepage Create Warehouse
 if sel_ware == 'Create a Warehouse':
     st.title('Snowflake Hackathon')
-    st.subheader("👇 Let's Create a new Warehouse in Snowflake")
+    #st.subheader("👇 Let's Create a new Warehouse in Snowflake")
     
     if st.button('Create a new Warehouse', on_click = callback) or st.session_state.key:
         create_ware(con)
-    st.subheader("👇 Click here to Download full Information about Warehouses available")
+    #st.subheader("👇 Click here to Download full Information about Warehouses available")
     st.download_button(
-    label = "Download data as CSV",
+    label = "Download existing Warehouse data as CSV",
     data = ware_csv,
     file_name = 'Warehouse_info.csv',
     mime = 'text/csv',
