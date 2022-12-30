@@ -717,7 +717,7 @@ with st.sidebar:
 if sel_data == 'Create a Database':
     st.subheader("Click the below button to create a new Database in Snowflake")
     
-    if st.button('Create database', on_click = callback) or st.session_state.key:
+    if st.button('Create Database', on_click = callback) or st.session_state.key:
         create_data(con)
     
     st.subheader('Click the below checkbox to Clone Existing Database')
@@ -861,7 +861,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             if st.button('Create Function', on_click = callback) or st.session_state.key:
                 create_function(con, sel_data)
     if sel_fun != 'Create a Function' and sel_fun != '-------------------':
-        st.subheader('Click the below button to Drop '+ str(sel_fun) +' Function?')
+        st.subheader('Click the below button to drop '+ str(sel_fun) +' Function?')
         if st.button('Drop Function'):
             drop_function(con, sel_fun)
 
@@ -878,7 +878,7 @@ if sel_role == 'Create a Role':
     if st.button('Create Role', on_click = callback) or st.session_state.key:
         create_role(con)
         
-    st.subheader("👇 Click the below button to download full information about Roles available")
+    st.subheader("Click the below button to download full information about Roles available")
     st.download_button(
     label = "Download",
     data = role_csv,
