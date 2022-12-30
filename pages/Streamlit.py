@@ -971,7 +971,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-    st.subheader("Number of Objects in Snowflake")
+    #st.subheader("Number of Objects in Snowflake")
     a = [len(list_ware), "Warehouse"]
     b = [len(list_data), "Database"]
     c = [len(list_role), "Role"]
@@ -984,6 +984,6 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
         x = 'Object:N',
         color=alt.Color("Object:N", scale=scale),
         )
-    st.altair_chart(bar_chart, theme=None, use_container_width=True)
+    #st.altair_chart(bar_chart, theme=None, use_container_width=True)
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
     
