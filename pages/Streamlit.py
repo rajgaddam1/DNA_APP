@@ -275,7 +275,7 @@ def create_schema(con, dbname):
 #####Create Function        
 def create_function(con, dbname):
     sql_query1 = st.text_area('Enter SQL', height= 250)
-    if st.button('Create Function'):
+    if st.button('Create '):
         try:
             cur = con.cursor()
             cur.execute(sql_query1)
@@ -594,7 +594,7 @@ def display_output(role_sql, ware_sql, query_sql) -> pd.DataFrame:
 ######FUNCTION Creation in Snowflake
 def function_create(role_sql, ware_sql, query_sql):
     con = con_window(ware_sql, role_sql)
-    if st.button('Create'):
+    if st.button('Create '):
         try:
             cur = con.cursor()
             cur.execute(query_sql)
@@ -875,7 +875,7 @@ with st.sidebar:
 if sel_role == 'Create a Role':
     
     st.subheader("Click the below button to create a new Role in Snowflake")
-    if st.button('Create Role', on_click = callback) or st.session_state.key:
+    if st.button('Create New Role', on_click = callback) or st.session_state.key:
         create_role(con)
         
     st.subheader("Click the below button to download full information about Roles available")
@@ -903,7 +903,7 @@ with st.sidebar:
 if sel_user == 'Create a User':
     
     st.subheader("Click the below button to create a new User in Snowflake")
-    if st.button('Create User', on_click = callback) or st.session_state.key:
+    if st.button('Create New User', on_click = callback) or st.session_state.key:
         create_user(con)
         
     st.subheader("Click the below button to download full information about Users available")
