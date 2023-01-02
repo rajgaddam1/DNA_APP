@@ -289,21 +289,21 @@ def create_function(con, dbname):
             cur.close()
         con.close()
 ###########Drop Function
-def drop_function(con, fun_name_del):
-    #ware_name_del = st.radio("Select Warehouse to Drop",list_ware)
-    sql_cmd = 'DROP FUNCTION IF EXISTS ' + str(fun_name_del) + ';'
-    try:
-        cur = con.cursor()
-        cur.execute(sql_cmd)
-        st.success(str(fun_name_del) + ' Function has been dropped')
-    except Exception as e:
-        print(e)
-        st.error(e)
-        #st.exception(e)
-        st.write('An error has occured please check logs')
-    finally:
-        cur.close()
-    con.close()
+def drop_function(con, dbname):
+    sql_query1 = st.text_area('Enter SQL', height= 250)
+    if st.button('Submit '):
+        try:
+            cur = con.cursor()
+            cur.execute(sql_query1)
+            st.success('Function has been Droppped')
+        except Exception as e:
+            print(e)
+            st.error(e)
+            #st.exception(e)
+            st.write('Please enter valid inputs')
+        finally:
+            cur.close()
+        con.close()
 
 
 ##########  Function to DROP Schema
@@ -857,9 +857,9 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         sel_fun = st.selectbox("**Functions**", fn_list_data_up)
         ################## Select Create Function
     if sel_fun == 'Create a Function':
-            st.subheader("Click the below button to create a new Function in Snowflake")
-            if st.button('Create Function', on_click = callback) or st.session_state.key:
-                create_function(con, sel_data)
+        st.subheader("Click the below button to create a new Function in Snowflake")
+        if st.button('Create Function', on_click = callback) or st.session_state.key:
+            create_function(con, sel_data)
     if sel_fun != 'Create a Function' and sel_fun != '-------------------':
         st.subheader('Click the below button to drop '+ str(sel_fun) +' Function?')
         if st.button('Drop Function'):
@@ -966,10 +966,6 @@ if sql_window:
         
 
 
-
-
-
-    
 #######HOME PAGE
 if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window :
     st.title('Snowflake Client')
