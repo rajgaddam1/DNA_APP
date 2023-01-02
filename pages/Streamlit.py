@@ -929,7 +929,11 @@ with st.sidebar:
     sel_report = st.selectbox('**Reports**', ['-------------------', 'Get Publish Report'])
 
 if sel_report == 'Get Publish Report':
-    st.subheader('Publish Report')
+    col1, col2, col3 = st.columns([3, 2, 2])
+    col1.subheader('Publish Report')
+    sel_database2 = col2.selectbox("Databases ", databases.name)
+    schemas_df_report = get_schema(snowflake_connector, sel_database2)
+    sel_ware3 = col3.selectbox("Schemas ", schemas_df_report.name)
     sel_days = st.radio("Get Objects Created or Modified", ['None','Last Day', 'Last 7 Days', 'Last 14 days'])
     if sel_days == 'Last Day':
         report1_df = get_report1(snowflake_connector)
