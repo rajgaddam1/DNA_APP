@@ -626,14 +626,14 @@ def show_view_query(_connector, dbname, scname, vname) -> pd.DataFrame:
 
 
 ########Publish Report 1
-def get_report1(_connector) -> pd.DataFrame:
-    return pd.read_sql("SELECT * FROM TABLE(DB1.PUBLIC.GET_PUBLISH_REPORT(-1));", _connector)
+def get_report1(_connector,dbname,scname) -> pd.DataFrame:
+    return pd.read_sql("SELECT * FROM TABLE(" + str(dbname)+ "." + str(scname) + ".GET_PUBLISH_REPORT(-1));", _connector)
 
-def get_report2(_connector) -> pd.DataFrame:
-    return pd.read_sql("SELECT * FROM TABLE(DB1.PUBLIC.GET_PUBLISH_REPORT(-7));", _connector)
+def get_report2(_connector,dbname,scname) -> pd.DataFrame:
+    return pd.read_sql("SELECT * FROM TABLE(" + str(dbname)+ "." + str(scname) + ".GET_PUBLISH_REPORT(-7));", _connector)
 
-def get_report3(_connector) -> pd.DataFrame:
-    return pd.read_sql("SELECT * FROM TABLE(DB1.PUBLIC.GET_PUBLISH_REPORT(-14));", _connector)
+def get_report3(_connector,dbname,scname) -> pd.DataFrame:
+    return pd.read_sql("SELECT * FROM TABLE(" + str(dbname)+ "." + str(scname) + ".GET_PUBLISH_REPORT(-14));", _connector)
 
 
 
@@ -931,18 +931,18 @@ with st.sidebar:
 if sel_report == 'Get Publish Report':
     col1, col2, col3 = st.columns([3, 2, 2])
     col1.subheader('Publish Report')
-    sel_database2 = col2.selectbox("Databases ", databases.name)
-    schemas_df_report = get_schema(snowflake_connector, sel_database2)
-    sel_ware3 = col3.selectbox("Schemas ", schemas_df_report.name)
+    sel_database3 = col2.selectbox("Databases ", databases.name)
+    schemas_df_report = get_schema(snowflake_connector, sel_database3)
+    sel_schema3 = col3.selectbox("Schemas ", schemas_df_report.name)
     sel_days = st.radio("Get Objects Created or Modified", ['None','Last Day', 'Last 7 Days', 'Last 14 days'])
     if sel_days == 'Last Day':
-        report1_df = get_report1(snowflake_connector)
+        report1_df = get_report1(snowflake_connector, sel_database3, sel_schema3)
         st.dataframe(report1_df)
     if sel_days == 'Last 7 Days':
-        report2_df = get_report2(snowflake_connector)
+        report2_df = get_report2(snowflake_connector, sel_database3, sel_schema3)
         st.dataframe(report2_df)
     if sel_days == 'Last 14 days':
-        report3_df = get_report3(snowflake_connector)
+        report3_df = get_report3(snowflake_connector, sel_database3, sel_schema3)
         st.dataframe(report3_df)    
     
 ########SQL Window
