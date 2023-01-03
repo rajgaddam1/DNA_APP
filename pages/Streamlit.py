@@ -635,6 +635,52 @@ def get_report2(_connector,dbname,scname) -> pd.DataFrame:
 def get_report3(_connector,dbname,scname) -> pd.DataFrame:
     return pd.read_sql("SELECT * FROM TABLE(" + str(dbname)+ "." + str(scname) + ".GET_PUBLISH_REPORT(-14));", _connector)
 
+def get_credit_report(_connector,ndays) -> pd.DataFrame:
+    cmd = '''
+WITH USER_HOUR_EXECUTION_CTE AS (
+    SELECT  USER_NAME
+    ,WAREHOUSE_NAME
+    ,DATE_TRUNC('hour',START_TIME) as START_TIME_HOUR
+    ,SUM(EXECUTION_TIME)  as USER_HOUR_EXECUTION_TIME
+    FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY" 
+    WHERE WAREHOUSE_NAME IS NOT NULL
+    AND EXECUTION_TIME > 0
+    --Change the below filter if you want to look at a longer range than the last 1 month 
+    AND START_TIME > DATEADD(Day,''' + str(ndays)  +''',CURRENT_TIMESTAMP())
+    group by 1,2,3
+    )
+, HOUR_EXECUTION_CTE AS (
+    SELECT  START_TIME_HOUR
+    ,WAREHOUSE_NAME
+    ,SUM(USER_HOUR_EXECUTION_TIME) AS HOUR_EXECUTION_TIME
+    FROM USER_HOUR_EXECUTION_CTE
+    group by 1,2
+)
+, APPROXIMATE_CREDITS AS (
+    SELECT 
+    A.USER_NAME
+    ,C.WAREHOUSE_NAME
+    ,(A.USER_HOUR_EXECUTION_TIME/B.HOUR_EXECUTION_TIME)*C.CREDITS_USED AS APPROXIMATE_CREDITS_USED
+
+    FROM USER_HOUR_EXECUTION_CTE A
+    JOIN HOUR_EXECUTION_CTE B  ON A.START_TIME_HOUR = B.START_TIME_HOUR and B.WAREHOUSE_NAME = A.WAREHOUSE_NAME
+    JOIN "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY" C ON C.WAREHOUSE_NAME = A.WAREHOUSE_NAME AND C.START_TIME = A.START_TIME_HOUR
+)
+
+SELECT TOP 5
+ USER_NAME
+,WAREHOUSE_NAME
+,SUM(APPROXIMATE_CREDITS_USED) AS APPROXIMATE_CREDITS_USED
+FROM APPROXIMATE_CREDITS
+GROUP BY 1,2
+ORDER BY 3 DESC
+;
+'''
+    return pd.read_sql(cmd, _connector)
+
+
+
+
 
 
 ##### Function to create Role CREATE ROLE
@@ -926,7 +972,7 @@ if sel_user != 'Create a User' and sel_user != '-------------------' :
 #######SIDEBAR_6(Report)
 with st.sidebar:
     global sel_report
-    sel_report = st.selectbox('**Reports**', ['-------------------', 'Get Publish Report'])
+    sel_report = st.selectbox('**Reports**', ['-------------------', 'Get Publish Report', 'Get Credit Usage Report'])
 
 if sel_report == 'Get Publish Report':
     col1, col2, col3 = st.columns([3, 2, 2])
@@ -943,7 +989,21 @@ if sel_report == 'Get Publish Report':
         st.dataframe(report2_df)
     if sel_days == 'Last 14 days':
         report3_df = get_report3(snowflake_connector, sel_database3, sel_schema3)
-        st.dataframe(report3_df)    
+        st.dataframe(report3_df)
+        
+if sel_report == 'Get Credit Usage Report':
+    st.subheader('Credit Usage Report')
+    sel_cred_days = st.radio("Get Credit Usage Report By User and Warehouse Name", ['None','Last Day', 'Last 7 Days', 'Last 14 days'])
+    #get_credit_report(_connector,ndays)
+    if sel_cred_days == 'Last Day':
+        cred_report1 = get_credit_report(snowflake_connector,-1)
+        st.dataframe(cred_report1)
+    if sel_cred_days == 'Last 7 Days':
+        cred_report2 = get_credit_report(snowflake_connector,-7)
+        st.dataframe(cred_report2)
+    if sel_cred_days == 'Last 14 days':
+        cred_report3 = get_credit_report(snowflake_connector,-14)
+        st.dataframe(cred_report3)    
     
 ########SQL Window
 with st.sidebar:
