@@ -8,7 +8,7 @@ from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 import altair as alt
 
-######Load color and scale
+#####Load color and scale
 
 scale = alt.Scale(
     domain=["Warehouse", "Database", "Role", "User"],
