@@ -8,7 +8,7 @@ from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 import altair as alt
 
-#####Load color and scale
+######Load color and scale
 
 scale = alt.Scale(
     domain=["Warehouse", "Database", "Role", "User"],
@@ -482,7 +482,7 @@ if sel_ware == 'Create a Warehouse':
     st.title('Snowflake Hackathon')
     st.subheader("Click the below button to create a new Warehouse in Snowflake")
     
-    if st.button('Create Warehouse', on_click = callback) or st.session_state.key:
+    if st.button('Create New Warehouse', on_click = callback) or st.session_state.key:
         create_ware(con)
     st.subheader("Click the below to Download full Information about Warehouses available")
     st.download_button(
@@ -763,7 +763,7 @@ with st.sidebar:
 if sel_data == 'Create a Database':
     st.subheader("Click the below button to create a new Database in Snowflake")
     
-    if st.button('Create Database', on_click = callback) or st.session_state.key:
+    if st.button('Create New Database', on_click = callback) or st.session_state.key:
         create_data(con)
     
     st.subheader('Click the below checkbox to Clone Existing Database')
