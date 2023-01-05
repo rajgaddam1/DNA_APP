@@ -686,7 +686,7 @@ def get_dash1(_connector) -> pd.DataFrame:
     cmd = '''
 SELECT TOP 5
 WAREHOUSE_NAME 
-      ,SUM(CREDITS_USED_COMPUTE) AS CREDITS_USED_COMPUTE_SUM
+      ,ROUND(SUM(CREDITS_USED_COMPUTE),2) AS CREDITS_USED_COMPUTE_SUM
   FROM ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY
  GROUP BY 1
  ORDER BY 2 DESC;'''
@@ -706,11 +706,12 @@ ORDER BY 2;'''
 def get_dash3(_connector) -> pd.DataFrame:
     cmd ='''
 SELECT TOP 5 WAREHOUSE_NAME
-,SUM(BYTES_SCANNED) AS BYTES_SCANNED
+,round((SUM(BYTES_SCANNED)/1073741824),2) AS GIGABYTES_SCANNED
 FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
 WHERE BYTES_SCANNED > 0
 GROUP BY 1
-ORDER BY 2;'''
+ORDER BY 2
+;'''
 
     return pd.read_sql(cmd, _connector)    
 
@@ -1217,7 +1218,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
     
     ######BAR CHART 3
-    col3.markdown('**Bytes Scanned By Warehouse**')
+    col3.markdown('**Giga Bytes Scanned By Warehouse**')
     dash3_df = get_dash3(snowflake_connector_dash)
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
