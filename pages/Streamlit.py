@@ -1088,8 +1088,8 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'BYTES_SCANNED',
-        color=alt.Color('WAREHOUSE_NAME',))
-    st.altair_chart(bar_chart3, theme=None, use_container_width=False)
+        color=alt.Color('WAREHOUSE_NAME',text_auto=True))
+    st.altair_chart(bar_chart3, theme=None, use_container_width=True)
     
     
     
