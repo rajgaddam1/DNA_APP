@@ -1048,5 +1048,5 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
         color=alt.Color('WAREHOUSE_NAME',))
-    st.altair_chart(bar_chart, theme=None, use_container_width=True)
+    st.altair_chart(bar_chart, theme=None, use_container_width=True,title="Seattle Weather: 2012-2015")
     
