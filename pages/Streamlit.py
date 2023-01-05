@@ -1094,7 +1094,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     text="BYTES_SCANNED",
     )
 
-    st.plotly_chart(fig,theme=None, use_conatiner_width=True)
+    st.plotly_chart(fig)
     
     
     
