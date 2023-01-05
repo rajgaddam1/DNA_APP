@@ -715,6 +715,43 @@ ORDER BY 2;'''
     return pd.read_sql(cmd, _connector)    
 
 
+#####Dashboard second Row
+def get_dash4(_connector) -> pd.DataFrame:
+    cmd = '''
+SELECT TOP 5 NAME, CREATED_ON,LAST_SUCCESS_LOGIN
+FROM SNOWFLAKE.ACCOUNT_USAGE.USERS 
+WHERE DELETED_ON IS NULL;'''
+
+    return pd.read_sql(cmd, _connector)
+
+    
+def get_dash5(_connector) -> pd.DataFrame:
+    cmd = '''
+SELECT TOP 5 NAME,OWNER,CREATED_ON
+FROM SNOWFLAKE.ACCOUNT_USAGE.USERS 
+WHERE LAST_SUCCESS_LOGIN IS NULL AND DELETED_ON IS NULL;'''
+    
+    return pd.read_sql(cmd, _connector)
+
+
+def get_dash6(_connector) -> pd.DataFrame:
+    cmd = '''
+SELECT 
+	R.NAME,R.OWNER,R.CREATED_ON
+FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES R
+LEFT JOIN (
+    SELECT DISTINCT 
+        ROLE_NAME 
+    FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY 
+        ) Q 
+                ON Q.ROLE_NAME = R.NAME
+WHERE Q.ROLE_NAME IS NULL
+and DELETED_ON IS NULL;'''
+    
+    return pd.read_sql(cmd, _connector)
+    
+    
+
 
 ##### Function to create Role CREATE ROLE
 def create_role(con):
@@ -1062,11 +1099,11 @@ if sql_window:
 #######HOME PAGE
 if sel_ware == '-------------------' and sel_data == '-------------------' and sel_role == '-------------------'  and sel_user == '-------------------' and sel_report == '-------------------' and not sql_window :
     st.title('Snowflake Client')
-    sel_role1 = st.selectbox("Role", roles_df.name)
-    sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-    col1, col2, col3 = st.columns([1, 1, 1])
+    #sel_role1 = st.selectbox("Role", roles_df.name)
+    #sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
+    col1, col2, col3 = st.columns([2, 2, 2])
     ######BAR CHART 1
-    col1.subheader('Credit Uses By Warehouse')
+    col1.caption('**Credit Uses By Warehouse**')
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
