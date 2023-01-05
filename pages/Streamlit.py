@@ -1042,9 +1042,9 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-
+    st.subheader('Credit Uses By Warehouse')
     dash1_df = get_dash1(snowflake_connector_dash)
-    bar_chart = alt.vconcat(title="Seattle Weather: 2012-2015").Chart(dash1_df).mark_bar().encode(
+    bar_chart = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
         color=alt.Color('WAREHOUSE_NAME',))
