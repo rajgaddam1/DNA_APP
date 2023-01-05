@@ -1078,7 +1078,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     dash2_df = get_dash2(snowflake_connector_dash)
     bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
-        x = 'CREDITS_USED_COMPUTE_SUM',
+        x = 'QUERY_COUNT',
         color=alt.Color('WAREHOUSE_NAME',))
     st.altair_chart(bar_chart2, theme=None, use_container_width=True)
     
@@ -1087,7 +1087,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     dash3_df = get_dash3(snowflake_connector_dash)
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
-        x = 'CREDITS_USED_COMPUTE_SUM',
+        x = 'BYTES_SCANNED',
         color=alt.Color('WAREHOUSE_NAME',))
     st.altair_chart(bar_chart3, theme=None, use_container_width=True)
     
