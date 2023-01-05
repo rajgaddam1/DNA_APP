@@ -764,13 +764,13 @@ QUERY_TEXT
   group by 1
   having count(*) >= 10 --configurable/minimal threshold
   order by 2 desc
-  limit 5 --configurable upper bound threshold;'''
+  limit 5 --configurable upper bound threshold
+  ;'''
     
     return pd.read_sql(cmd, _connector)
 
 def get_dash8(_connector) -> pd.DataFrame:
     cmd = '''
---THIS IS APPROXIMATE CREDIT CONSUMPTION BY CLIENT APPLICATION
 WITH CLIENT_HOUR_EXECUTION_CTE AS (
     SELECT  CASE
          WHEN CLIENT_APPLICATION_ID LIKE 'Go %' THEN 'Go'
@@ -815,7 +815,8 @@ SELECT
 FROM APPROXIMATE_CREDITS
 GROUP BY 1,2
 ORDER BY 3 DESC
-LIMIT 5;'''  
+LIMIT 5
+;'''  
     return pd.read_sql(cmd, _connector)
 
 def get_dash9(_connector) -> pd.DataFrame:
@@ -837,9 +838,7 @@ from SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
    
   order by  TOTAL_ELAPSED_TIME desc
    
-   LIMIT 5;
-    
-'''
+   LIMIT 5;'''
     
     return pd.read_sql(cmd, _connector)
 
