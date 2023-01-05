@@ -1072,8 +1072,8 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart = alt.Chart(dash1_df).mark_bar().encode(
-        y = 'Object:N',
+        y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color("Object:N", scale=scale),)
+        color=alt.Color('WAREHOUSE_NAME', scale=scale),)
     st.altair_chart(bar_chart, theme=None, use_container_width=True)
     
