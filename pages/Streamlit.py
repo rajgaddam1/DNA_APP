@@ -10,17 +10,7 @@ import altair as alt
 
 ######Load color and scale
 
-scale = alt.Scale(
-    domain=["Warehouse", "Database", "Role", "User"],
-    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4"],
-)
-color = alt.Color("weather:N", scale=scale)
 
-# We create two selections:
-# - a brush that is active on the top panel
-# - a multi-click that is active on the bottom panel
-brush = alt.selection_interval(encodings=["x"])
-click = alt.selection_multi(encodings=["color"])
 
 ##############Snowflake Credentials
 
@@ -1057,19 +1047,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
     #st.subheader("Number of Objects in Snowflake")
-    a = [len(list_ware), "Warehouse"]
-    b = [len(list_data), "Database"]
-    c = [len(list_role), "Role"]
-    d = [len(list_user), "User"]
 
-
-    chart_data = pd.DataFrame([a, b, c, d],columns=["Count", "Object"])
-    bar_chart = alt.Chart(chart_data).mark_bar().encode(
-        y = 'Count',
-        x = 'Object:N',
-        color=alt.Color("Object:N", scale=scale),)
-    #st.altair_chart(bar_chart, theme=None, use_container_width=True)
-    #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
