@@ -705,13 +705,9 @@ ORDER BY 2;'''
     
 def get_dash3(_connector) -> pd.DataFrame:
     cmd ='''
-SELECT TOP 5 WAREHOUSE_NAME
-,round((SUM(BYTES_SCANNED)/1073741824),2) AS GIGABYTES_SCANNED
-FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
-WHERE BYTES_SCANNED > 0
-GROUP BY 1
-ORDER BY 2
-;'''
+SELECT TOP 5 NAME, CREATED_ON,LAST_SUCCESS_LOGIN
+FROM SNOWFLAKE.ACCOUNT_USAGE.USERS 
+WHERE DELETED_ON IS NULL AND DATEDIFF(day,last_success_login,CURRENT_DATE())>15;'''
 
     return pd.read_sql(cmd, _connector)    
 
@@ -1236,7 +1232,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     col2.dataframe(dash5_df)  
     
     ####DataFrame 3
-    col3.markdown('**Idle Users**')
+    col3.markdown('**Idle Roles**')
     dash6_df = get_dash6(snowflake_connector_dash)
     col3.dataframe(dash6_df)  
     ####DataFrame 4
