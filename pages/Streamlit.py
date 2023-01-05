@@ -750,6 +750,102 @@ and DELETED_ON IS NULL;'''
     
     return pd.read_sql(cmd, _connector)
     
+def get_dash7(_connector) -> pd.DataFrame:
+    cmd ='''
+SELECT 
+QUERY_TEXT
+,count(*) as number_of_queries
+,ROUND((sum(TOTAL_ELAPSED_TIME)/1000),2) as execution_seconds
+
+  from SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
+  where 1=1 
+ and TOTAL_ELAPSED_TIME > 0 --only get queries that actually used compute
+  group by 1
+  having count(*) >= 10 --configurable/minimal threshold
+  order by 2 desc
+  limit 5 --configurable upper bound threshold;'''
+    
+    return pd.read_sql(cmd, _connector)
+
+def get_dash8(_connector) -> pd.DataFrame:
+    cmd = '''
+--THIS IS APPROXIMATE CREDIT CONSUMPTION BY CLIENT APPLICATION
+WITH CLIENT_HOUR_EXECUTION_CTE AS (
+    SELECT  CASE
+         WHEN CLIENT_APPLICATION_ID LIKE 'Go %' THEN 'Go'
+         WHEN CLIENT_APPLICATION_ID LIKE 'Snowflake UI %' THEN 'Snowflake UI'
+         WHEN CLIENT_APPLICATION_ID LIKE 'SnowSQL %' THEN 'SnowSQL'
+         WHEN CLIENT_APPLICATION_ID LIKE 'JDBC %' THEN 'JDBC'
+         WHEN CLIENT_APPLICATION_ID LIKE 'PythonConnector %' THEN 'Python'
+         WHEN CLIENT_APPLICATION_ID LIKE 'ODBC %' THEN 'ODBC'
+         ELSE 'NOT YET MAPPED: ' || CLIENT_APPLICATION_ID
+       END AS CLIENT_APPLICATION_NAME
+    ,WAREHOUSE_NAME
+    ,DATE_TRUNC('hour',START_TIME) as START_TIME_HOUR
+    ,SUM(EXECUTION_TIME)  as CLIENT_HOUR_EXECUTION_TIME
+    FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY" QH
+    JOIN "SNOWFLAKE"."ACCOUNT_USAGE"."SESSIONS" SE ON SE.SESSION_ID = QH.SESSION_ID
+    WHERE WAREHOUSE_NAME IS NOT NULL
+    AND EXECUTION_TIME > 0
+    group by 1,2,3
+    )
+, HOUR_EXECUTION_CTE AS (
+    SELECT  START_TIME_HOUR
+    ,WAREHOUSE_NAME
+    ,SUM(CLIENT_HOUR_EXECUTION_TIME) AS HOUR_EXECUTION_TIME
+    FROM CLIENT_HOUR_EXECUTION_CTE
+    group by 1,2
+)
+, APPROXIMATE_CREDITS AS (
+    SELECT 
+    A.CLIENT_APPLICATION_NAME
+    ,C.WAREHOUSE_NAME
+    ,(A.CLIENT_HOUR_EXECUTION_TIME/B.HOUR_EXECUTION_TIME)*C.CREDITS_USED AS APPROXIMATE_CREDITS_USED
+
+    FROM CLIENT_HOUR_EXECUTION_CTE A
+    JOIN HOUR_EXECUTION_CTE B  ON A.START_TIME_HOUR = B.START_TIME_HOUR and B.WAREHOUSE_NAME = A.WAREHOUSE_NAME
+    JOIN "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY" C ON C.WAREHOUSE_NAME = A.WAREHOUSE_NAME AND C.START_TIME = A.START_TIME_HOUR
+)
+
+SELECT 
+ CLIENT_APPLICATION_NAME
+,WAREHOUSE_NAME
+,ROUND(SUM(APPROXIMATE_CREDITS_USED),2) AS APPROXIMATE_CREDITS_USED
+FROM APPROXIMATE_CREDITS
+GROUP BY 1,2
+ORDER BY 3 DESC
+LIMIT 5;'''  
+    return pd.read_sql(cmd, _connector)
+
+def get_dash9(_connector) -> pd.DataFrame:
+    cmd ='''
+select
+          
+          QUERY_ID
+          ,QUERY_TEXT
+         ,TOTAL_ELAPSED_TIME/1000 AS QUERY_EXECUTION_TIME_SECONDS
+         ,PARTITIONS_SCANNED
+         ,PARTITIONS_TOTAL
+
+from SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY Q
+ where 1=1
+   
+    and TOTAL_ELAPSED_TIME > 0 --only get queries that actually used compute
+    and ERROR_CODE iS NULL
+    and PARTITIONS_SCANNED is not null
+   
+  order by  TOTAL_ELAPSED_TIME desc
+   
+   LIMIT 5;
+    
+'''
+    
+    return pd.read_sql(cmd, _connector)
+
+
+
+
+
     
 
 
@@ -1142,7 +1238,21 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     ####DataFrame 3
     col3.markdown('**Idle Roles**')
     dash6_df = get_dash6(snowflake_connector_dash)
-    col3.dataframe(dash6_df)    
+    col3.dataframe(dash6_df)  
+    ####DataFrame 4
+    col4, col5 = st.columns([2, 2])
+    col4.markdown('**Queries by # of Times Executed and Execution Time**')
+    dash7_df = get_dash7(snowflake_connector_dash)
+    col4.dataframe(dash7_df)    
+    ####DataFrame 5
+    col5.markdown('**CREDIT CONSUMPTION BY CLIENT APPLICATION**')
+    dash8_df = get_dash8(snowflake_connector_dash)
+    col5.dataframe(dash8_df) 
+    ####DataFrame 6
+    st.markdown('**Top 5 Longest Running Queries**')
+    dash9_df = get_dash9(snowflake_connector_dash)
+    st.dataframe(dash9_df)    
+    
     
     
     
