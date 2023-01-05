@@ -1236,7 +1236,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     col2.dataframe(dash5_df)  
     
     ####DataFrame 3
-    col3.markdown('**Idle Roles**')
+    col3.markdown('**Idle Users**')
     dash6_df = get_dash6(snowflake_connector_dash)
     col3.dataframe(dash6_df)  
     ####DataFrame 4
