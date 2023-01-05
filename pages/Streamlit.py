@@ -1112,7 +1112,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     col1.altair_chart(bar_chart1, theme=None, use_container_width=True)
     
     ######BAR CHART 2
-    col2.subheader('Query Count By Warehouse')
+    col2.markdown('**Query Count By Warehouse**')
     dash2_df = get_dash2(snowflake_connector_dash)
     bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
@@ -1121,7 +1121,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
     
     ######BAR CHART 3
-    col3.subheader('Bytes Scanned By Warehouse')
+    col3.markdown('**Bytes Scanned By Warehouse**')
     dash3_df = get_dash3(snowflake_connector_dash)
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
