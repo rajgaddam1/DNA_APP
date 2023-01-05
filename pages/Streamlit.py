@@ -152,6 +152,21 @@ def con_window(ware_sql,role_sql):
                     role = role_sql)
     return con_fun
 
+
+####SNOWFLAKE CONNECTION FOR DASHBOARDS
+def get_connector_dash() -> SnowflakeConnection:
+    """Create a connector to SnowFlake using credentials filled in Streamlit secrets"""
+    con = snowflake.connector.connect(
+    user = user,
+    password = password,
+    account = account,
+    warehouse='DNAHACK',
+    database = 'SNOWFLAKE',
+    schema = 'ACCOUNT_USAGE')
+    return con
+
+snowflake_connector_dash = get_connector_dash()
+
 #####Show warehouses
 def get_wareshouse(_connector) -> pd.DataFrame:
     return pd.read_sql("SHOW WAREHOUSES;", _connector)
@@ -1055,6 +1070,6 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
         color=alt.Color("Object:N", scale=scale),)
     #st.altair_chart(bar_chart, theme=None, use_container_width=True)
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
-    dash1_df = get_dash1(snowflake_connector)
+    dash1_df = get_dash1(snowflake_connector_dash)
     st.dataframe(dash1_df)
     
