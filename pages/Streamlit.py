@@ -1086,11 +1086,15 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     ######BAR CHART 3
     st.subheader('Bytes Scanned By Warehouse')
     dash3_df = get_dash3(snowflake_connector_dash)
-    bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
-        y = 'WAREHOUSE_NAME',
-        x = 'BYTES_SCANNED',
-        color=alt.Color('WAREHOUSE_NAME'))
-    st.altair_chart(bar_chart3, theme=None, use_container_width=True,text_auto=True)
+    fig = px.bar(
+    dash3_df,
+    x="BYTES_SCANNED",
+    y="WAREHOUSE_NAME",
+    color="WAREHOUSE_NAME",
+    text="BYTES_SCANNED",
+    )
+
+    st.plotly_chart(fig)
     
     
     
