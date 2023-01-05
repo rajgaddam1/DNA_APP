@@ -1132,17 +1132,17 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     ####DataFrame 1
     col1.markdown('**Idle Users**')
     dash4_df = get_dash4(snowflake_connector_dash)
-    st.dataframe(dash4_df)
+    col1.dataframe(dash4_df)
     
     ####DataFrame 2
-    col1.markdown('**Users Never Logged in**')
+    col2.markdown('**Users Never Logged in**')
     dash5_df = get_dash5(snowflake_connector_dash)
-    st.dataframe(dash5_df)  
+    col2.dataframe(dash5_df)  
     
     ####DataFrame 3
-    col1.markdown('**Idle Roles**')
+    col3.markdown('**Idle Roles**')
     dash6_df = get_dash6(snowflake_connector_dash)
-    st.dataframe(dash6_df)    
+    col3.dataframe(dash6_df)    
     
     
     
