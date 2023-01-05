@@ -1070,7 +1070,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color('WAREHOUSE_NAME',))
+        color=alt.Color('WAREHOUSE_NAME', legend = None,))
     st.altair_chart(bar_chart1, theme=None, use_container_width=True)
     
     ######BAR CHART 2
@@ -1079,7 +1079,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'QUERY_COUNT',
-        color=alt.Color('WAREHOUSE_NAME',))
+        color=alt.Color('WAREHOUSE_NAME', legend = None,))
     st.altair_chart(bar_chart2, theme=None, use_container_width=True)
     
     ######BAR CHART 3
