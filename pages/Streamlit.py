@@ -7,6 +7,7 @@ import pandas as pd
 from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 import altair as alt
+import plotly.express as px
 
 ##############Snowflake Credentials
 
