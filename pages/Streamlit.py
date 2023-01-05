@@ -692,6 +692,28 @@ WAREHOUSE_NAME
  ORDER BY 2 DESC;'''
     return pd.read_sql(cmd, _connector)
 
+def get_dash2(_connector) -> pd.DataFrame:
+    cmd ='''
+SELECT TOP 5 WAREHOUSE_NAME
+,COUNT(*) AS QUERY_COUNT
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+WHERE BYTES_SCANNED > 0
+GROUP BY 1
+ORDER BY 2;'''
+
+    return pd.read_sql(cmd, _connector)
+    
+def get_dash3(_connector) -> pd.DataFrame:
+    cmd ='''
+SELECT TOP 5 WAREHOUSE_NAME
+,SUM(BYTES_SCANNED) AS BYTES_SCANNED
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+WHERE BYTES_SCANNED > 0
+GROUP BY 1
+ORDER BY 2;'''
+
+    return pd.read_sql(cmd, _connector)    
+
 
 
 ##### Function to create Role CREATE ROLE
@@ -1042,11 +1064,32 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
+    ######BAR CHART 1
     st.subheader('Credit Uses By Warehouse')
     dash1_df = get_dash1(snowflake_connector_dash)
-    bar_chart = alt.Chart(dash1_df).mark_bar().encode(
+    bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color('WAREHOUSE_NAME'))
-    st.altair_chart(bar_chart, theme=None, use_container_width=True)
+        color=alt.Color('WAREHOUSE_NAME',))
+    st.altair_chart(bar_chart1, theme=None, use_container_width=True)
+    
+    ######BAR CHART 2
+    st.subheader('Query Count By Warehouse')
+    dash2_df = get_dash2(snowflake_connector_dash)
+    bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
+        y = 'WAREHOUSE_NAME',
+        x = 'CREDITS_USED_COMPUTE_SUM',
+        color=alt.Color('WAREHOUSE_NAME',))
+    st.altair_chart(bar_chart2, theme=None, use_container_width=True)
+    
+    ######BAR CHART 3
+    st.subheader('Bytes Scanned By Warehouse')
+    dash3_df = get_dash3(snowflake_connector_dash)
+    bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
+        y = 'WAREHOUSE_NAME',
+        x = 'CREDITS_USED_COMPUTE_SUM',
+        color=alt.Color('WAREHOUSE_NAME',))
+    st.altair_chart(bar_chart3, theme=None, use_container_width=True)
+    
+    
     
