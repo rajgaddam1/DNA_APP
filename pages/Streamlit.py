@@ -1103,7 +1103,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     #sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
     col1, col2, col3 = st.columns([2, 2, 2])
     ######BAR CHART 1
-    col1.caption('**Credit Uses By Warehouse**')
+    col1.markdown('**Credit Uses By Warehouse**')
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
