@@ -1047,6 +1047,6 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color('WAREHOUSE_NAME',))
+        color=alt.Color('WAREHOUSE_NAME',title="Credit Uses By Warehouse",))
     st.altair_chart(bar_chart, theme=None, use_container_width=True)
     
