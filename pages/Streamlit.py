@@ -1222,7 +1222,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     dash3_df = get_dash3(snowflake_connector_dash)
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
-        x = 'BYTES_SCANNED',
+        x = 'GIGABYTES_SCANNED',
         color=alt.Color('WAREHOUSE_NAME',legend = None, ))
     col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
     
