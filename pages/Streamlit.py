@@ -1064,32 +1064,33 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
+    col1, col2, col3 = st.columns([2, 2, 2])
     ######BAR CHART 1
-    st.subheader('Credit Uses By Warehouse')
+    col1.subheader('Credit Uses By Warehouse')
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
         color=alt.Color('WAREHOUSE_NAME', legend = None,))
-    st.altair_chart(bar_chart1, theme=None, use_container_width=True)
+    col1.altair_chart(bar_chart1, theme=None, use_container_width=True)
     
     ######BAR CHART 2
-    st.subheader('Query Count By Warehouse')
+    col2.subheader('Query Count By Warehouse')
     dash2_df = get_dash2(snowflake_connector_dash)
     bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'QUERY_COUNT',
         color=alt.Color('WAREHOUSE_NAME', legend = None,))
-    st.altair_chart(bar_chart2, theme=None, use_container_width=True)
+    col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
     
     ######BAR CHART 3
-    st.subheader('Bytes Scanned By Warehouse')
+    col3.subheader('Bytes Scanned By Warehouse')
     dash3_df = get_dash3(snowflake_connector_dash)
     bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'BYTES_SCANNED',
         color=alt.Color('WAREHOUSE_NAME',legend = None, ))
-    st.altair_chart(bar_chart3, theme=None, use_container_width=True)
+    col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
     
     
     
