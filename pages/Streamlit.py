@@ -8,10 +8,6 @@ from snowflake.connector.connection import SnowflakeConnection
 from PIL import Image
 import altair as alt
 
-######Load color and scale
-
-
-
 ##############Snowflake Credentials
 
 user = os.environ.get('user')
@@ -1046,12 +1042,11 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-    #st.subheader("Number of Objects in Snowflake")
 
     dash1_df = get_dash1(snowflake_connector_dash)
     bar_chart = alt.Chart(dash1_df).mark_bar().encode(
         y = 'WAREHOUSE_NAME',
         x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color('WAREHOUSE_NAME'),)
+        color=alt.Color('WAREHOUSE_NAME',))
     st.altair_chart(bar_chart, theme=None, use_container_width=True)
     
