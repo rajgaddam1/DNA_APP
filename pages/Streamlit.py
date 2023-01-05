@@ -679,7 +679,17 @@ ORDER BY 3 DESC
     return pd.read_sql(cmd, _connector)
 
 
-
+###########PREPARE DASHBOARD 1 --GET CREDIT USAGE BY WAREHOUSE
+def get_dash1(_connector) -> pd.DataFrame:
+##Credits used (past N days/weeks/months)
+    cmd = '''
+SELECT TOP 5
+WAREHOUSE_NAME 
+      ,SUM(CREDITS_USED_COMPUTE) AS CREDITS_USED_COMPUTE_SUM
+  FROM ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY
+ GROUP BY 1
+ ORDER BY 2 DESC;'''
+    return pd.read_sql(cmd, _connector)
 
 
 
@@ -1042,8 +1052,9 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     bar_chart = alt.Chart(chart_data).mark_bar().encode(
         y = 'Count',
         x = 'Object:N',
-        color=alt.Color("Object:N", scale=scale),
-        )
+        color=alt.Color("Object:N", scale=scale),)
     #st.altair_chart(bar_chart, theme=None, use_container_width=True)
     #st.bar_chart(chart_data["Object"], x = [len(list_ware), len(list_data), len(list_role), len(list_user)])
+    dash1_df = get_dash1(snowflake_connector)
+    st.dataframe(dash1_df)
     
