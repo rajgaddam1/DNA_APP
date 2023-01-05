@@ -1064,7 +1064,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     st.title('Snowflake Client')
     sel_role1 = st.selectbox("Role", roles_df.name)
     sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
-    col1, col2, col3 = st.columns([3, 3, 3])
+    col1, col2, col3 = st.columns([1, 1, 1])
     ######BAR CHART 1
     col1.subheader('Credit Uses By Warehouse')
     dash1_df = get_dash1(snowflake_connector_dash)
