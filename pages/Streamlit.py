@@ -1129,5 +1129,20 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
         color=alt.Color('WAREHOUSE_NAME',legend = None, ))
     col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
     
+    ####DataFrame 1
+    col1.markdown('**Idle Users**')
+    dash4_df = get_dash4(snowflake_connector_dash)
+    st.dataframe(dash4_df)
+    
+    ####DataFrame 2
+    col1.markdown('**Users Never Logged in**')
+    dash5_df = get_dash5(snowflake_connector_dash)
+    st.dataframe(dash5_df)  
+    
+    ####DataFrame 3
+    col1.markdown('**Idle Roles**')
+    dash6_df = get_dash6(snowflake_connector_dash)
+    st.dataframe(dash6_df)    
+    
     
     
