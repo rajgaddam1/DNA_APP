@@ -1089,7 +1089,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
         y = 'WAREHOUSE_NAME',
         x = 'BYTES_SCANNED',
         color=alt.Color('WAREHOUSE_NAME',))
-    st.altair_chart(bar_chart3, theme=None, use_container_width=True)
+    st.altair_chart(bar_chart3, theme=None, use_container_width=False)
     
     
     
