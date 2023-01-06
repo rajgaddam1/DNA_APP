@@ -552,7 +552,11 @@ role_csv = convert_df(roles_df)
 
 #######SHOW USERS
 def get_user(_connector) -> pd.DataFrame:
-    return pd.read_sql("SHOW USERS", _connector)
+    try:
+        return pd.read_sql("SHOW USERS", _connector)
+    except:
+        st.error('Invalid connection or SQL access control error')
+        
 
 users_df = get_user(snowflake_connector)
 
