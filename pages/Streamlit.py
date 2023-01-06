@@ -1201,60 +1201,63 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
     #sel_role1 = st.selectbox("Role", roles_df.name)
     #sel_ware1 = st.selectbox("Warehouse", wareshouse.name)
     col1, col2, col3 = st.columns([2, 2, 2])
-    ######BAR CHART 1
-    col1.markdown('**Credit Uses By Warehouse**')
-    dash1_df = get_dash1(snowflake_connector_dash)
-    bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
-        y = 'WAREHOUSE_NAME',
-        x = 'CREDITS_USED_COMPUTE_SUM',
-        color=alt.Color('WAREHOUSE_NAME', legend = None,))
-    col1.altair_chart(bar_chart1, theme=None, use_container_width=True)
-    
-    ######BAR CHART 2
-    col2.markdown('**Query Count By Warehouse**')
-    dash2_df = get_dash2(snowflake_connector_dash)
-    bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
-        y = 'WAREHOUSE_NAME',
-        x = 'QUERY_COUNT',
-        color=alt.Color('WAREHOUSE_NAME', legend = None,))
-    col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
-    
-    ######BAR CHART 3
-    col3.markdown('**Giga Bytes Scanned By Warehouse**')
-    dash3_df = get_dash3(snowflake_connector_dash)
-    bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
-        y = 'WAREHOUSE_NAME',
-        x = 'GIGABYTES_SCANNED',
-        color=alt.Color('WAREHOUSE_NAME',legend = None, ))
-    col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
-    
-    ####DataFrame 1
-    col1.markdown('**Idle Users**')
-    dash4_df = get_dash4(snowflake_connector_dash)
-    col1.dataframe(dash4_df)
-    
-    ####DataFrame 2
-    col2.markdown('**Users Never Logged in**')
-    dash5_df = get_dash5(snowflake_connector_dash)
-    col2.dataframe(dash5_df)  
-    
-    ####DataFrame 3
-    col3.markdown('**Idle Roles**')
-    dash6_df = get_dash6(snowflake_connector_dash)
-    col3.dataframe(dash6_df)  
-    ####DataFrame 4
-    col4, col5 = st.columns([2, 2])
-    col4.markdown('**Queries by # of Times Executed and Execution Time**')
-    dash7_df = get_dash7(snowflake_connector_dash)
-    col4.dataframe(dash7_df)    
-    ####DataFrame 5
-    col5.markdown('**CREDIT CONSUMPTION BY CLIENT APPLICATION**')
-    dash8_df = get_dash8(snowflake_connector_dash)
-    col5.dataframe(dash8_df) 
-    ####DataFrame 6
-    st.markdown('**Top 5 Longest Running Queries**')
-    dash9_df = get_dash9(snowflake_connector_dash)
-    st.dataframe(dash9_df)    
+    try:
+        ######BAR CHART 1
+        col1.markdown('**Credit Uses By Warehouse**')
+        dash1_df = get_dash1(snowflake_connector_dash)
+        bar_chart1 = alt.Chart(dash1_df).mark_bar().encode(
+            y = 'WAREHOUSE_NAME',
+            x = 'CREDITS_USED_COMPUTE_SUM',
+            color=alt.Color('WAREHOUSE_NAME', legend = None,))
+        col1.altair_chart(bar_chart1, theme=None, use_container_width=True)
+        
+        ######BAR CHART 2
+        col2.markdown('**Query Count By Warehouse**')
+        dash2_df = get_dash2(snowflake_connector_dash)
+        bar_chart2 = alt.Chart(dash2_df).mark_bar().encode(
+            y = 'WAREHOUSE_NAME',
+            x = 'QUERY_COUNT',
+            color=alt.Color('WAREHOUSE_NAME', legend = None,))
+        col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
+        
+        ######BAR CHART 3
+        col3.markdown('**Giga Bytes Scanned By Warehouse**')
+        dash3_df = get_dash3(snowflake_connector_dash)
+        bar_chart3 = alt.Chart(dash3_df).mark_bar().encode(
+            y = 'WAREHOUSE_NAME',
+            x = 'GIGABYTES_SCANNED',
+            color=alt.Color('WAREHOUSE_NAME',legend = None, ))
+        col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
+        
+        ####DataFrame 1
+        col1.markdown('**Idle Users**')
+        dash4_df = get_dash4(snowflake_connector_dash)
+        col1.dataframe(dash4_df)
+        
+        ####DataFrame 2
+        col2.markdown('**Users Never Logged in**')
+        dash5_df = get_dash5(snowflake_connector_dash)
+        col2.dataframe(dash5_df)  
+        
+        ####DataFrame 3
+        col3.markdown('**Idle Roles**')
+        dash6_df = get_dash6(snowflake_connector_dash)
+        col3.dataframe(dash6_df)  
+        ####DataFrame 4
+        col4, col5 = st.columns([2, 2])
+        col4.markdown('**Queries by # of Times Executed and Execution Time**')
+        dash7_df = get_dash7(snowflake_connector_dash)
+        col4.dataframe(dash7_df)    
+        ####DataFrame 5
+        col5.markdown('**CREDIT CONSUMPTION BY CLIENT APPLICATION**')
+        dash8_df = get_dash8(snowflake_connector_dash)
+        col5.dataframe(dash8_df) 
+        ####DataFrame 6
+        st.markdown('**Top 5 Longest Running Queries**')
+        dash9_df = get_dash9(snowflake_connector_dash)
+        st.dataframe(dash9_df)
+    except:
+        st.error('User does not have access to Dashboard')
     
     
     
