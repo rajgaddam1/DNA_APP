@@ -985,7 +985,7 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
         ################## Select Create Schema
     if sel_schema == 'Create a Schema':
             st.subheader("Click the below button to create a new Schema in Snowflake")
-            if st.button('Create Schema', on_click = callback) or st.session_state.key:
+            if st.button('Create New Schema', on_click = callback) or st.session_state.key:
                 create_schema(con, sel_data)
    
 ##################Table sidebar
