@@ -544,10 +544,7 @@ def get_role(_connector) -> pd.DataFrame:
 
 roles_df = get_role(snowflake_connector)
 
-if len(roles_df) != 0:
-    list_role = roles_df['name'].to_list()
-else:
-    list_role = []
+list_role = roles_df['name'].to_list()
 list_up2 = ['-------------------', 'Create a Role']
 list_role_up = list_up2 + list_role
 
@@ -555,22 +552,19 @@ role_csv = convert_df(roles_df)
 
 #######SHOW USERS
 def get_user(_connector) -> pd.DataFrame:
-    try:
-        return pd.read_sql("SHOW USERS", _connector)
-    except:
-        st.error('Invalid connection or SQL access control error')
-        
+    return pd.read_sql("SHOW USERS", _connector)
 
-users_df = get_user(snowflake_connector)
-if len(users_df) != 0:
+try:
+    users_df = get_user(snowflake_connector)
+
     list_user = users_df['name'].to_list()
-else:
-    list_user = []    
-    
-list_up3 = ['-------------------', 'Create a User']
-list_user_up = list_up3 + list_user
+    list_up3 = ['-------------------', 'Create a User']
+    list_user_up = list_up3 + list_user
 
-user_csv = convert_df(users_df)
+    user_csv = convert_df(users_df)
+except:
+    list_user_up = []
+    
 
 
 
