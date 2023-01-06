@@ -544,7 +544,10 @@ def get_role(_connector) -> pd.DataFrame:
 
 roles_df = get_role(snowflake_connector)
 
-list_role = roles_df['name'].to_list()
+if len(roles_df) != 0:
+    list_role = roles_df['name'].to_list()
+else:
+    list_role = []
 list_up2 = ['-------------------', 'Create a Role']
 list_role_up = list_up2 + list_role
 
