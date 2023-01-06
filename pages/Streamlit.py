@@ -562,8 +562,11 @@ def get_user(_connector) -> pd.DataFrame:
         
 
 users_df = get_user(snowflake_connector)
-
-list_user = users_df['name'].to_list()
+if len(users_df) != 0:
+    list_user = users_df['name'].to_list()
+else:
+    list_user = []    
+    
 list_up3 = ['-------------------', 'Create a User']
 list_user_up = list_up3 + list_user
 
