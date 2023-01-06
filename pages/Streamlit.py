@@ -1136,7 +1136,7 @@ if sel_user != 'Create a User' and sel_user != '-------------------' :
         
     st.subheader('User Information')
 
-    st.dataframe(users_df[['name', 'has_password']].loc[users_df['name'] == sel_user])
+    #st.dataframe(users_df[['name', 'has_password']].loc[users_df['name'] == sel_user])
 
 #######SIDEBAR_6(Report)
 with st.sidebar:
