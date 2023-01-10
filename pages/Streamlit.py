@@ -564,6 +564,8 @@ try:
     user_csv = convert_df(users_df)
 except:
     list_user_up = ['-------------------', 'Create a User']
+    empty_df = pd.DataFrame()
+    user_csv = convert_df(empty_df)
     
 
 
