@@ -15,7 +15,7 @@ password = os.environ.get('password')
 account = os.environ.get('account')
 
 st.set_page_config(
-    page_title="Snowflake Client",)
+    page_title="Snowflake Client", layout='wide')
 
 ##########Header and Footer
 hide_footer_style='''
