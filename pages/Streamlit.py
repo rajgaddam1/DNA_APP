@@ -1211,8 +1211,8 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
             y = 'WAREHOUSE_NAME',
             x = 'CREDITS_USED_COMPUTE_SUM',
             color=alt.Color('WAREHOUSE_NAME', legend = None,))
-        text = bar_chart1.mark_text(align='left',baseline='middle',dx=3).encode(text='CREDITS_USED_COMPUTE_SUM:Q')
-        col1.altair_chart((bar_chart1 + text), theme=None, use_container_width=True)
+        text1 = bar_chart1.mark_text(align='left',baseline='middle',dx=3).encode(text='CREDITS_USED_COMPUTE_SUM:Q')
+        col1.altair_chart((bar_chart1 + text1), theme=None, use_container_width=True)
         
         ######BAR CHART 2
         col2.markdown('**Query Count By Warehouse**')
@@ -1221,7 +1221,8 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
             y = 'WAREHOUSE_NAME',
             x = 'QUERY_COUNT',
             color=alt.Color('WAREHOUSE_NAME', legend = None,))
-        col2.altair_chart(bar_chart2, theme=None, use_container_width=True)
+        text2 = bar_chart2.mark_text(align='left',baseline='middle',dx=3).encode(text='QUERY_COUNT:Q')
+        col2.altair_chart((bar_chart2 + text2), theme=None, use_container_width=True)
         
         ######BAR CHART 3
         col3.markdown('**Giga Bytes Scanned By Warehouse**')
@@ -1230,7 +1231,8 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
             y = 'WAREHOUSE_NAME',
             x = 'GIGABYTES_SCANNED',
             color=alt.Color('WAREHOUSE_NAME',legend = None, ))
-        col3.altair_chart(bar_chart3, theme=None, use_container_width=True)
+        text3 = bar_chart3.mark_text(align='left',baseline='middle',dx=3).encode(text='GIGABYTES_SCANNED:Q')
+        col3.altair_chart((bar_chart3 + text3), theme=None, use_container_width=True)
         
         ####DataFrame 1
         col1.markdown('**Idle Users**')
