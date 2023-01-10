@@ -23,7 +23,7 @@ try:
     st.set_page_config(
         page_title="Snowflake Client", layout='wide')
 except:
-     st.warning("Please Login")
+     print("Please Login")
 
 ##########Header and Footer
 hide_footer_style='''
