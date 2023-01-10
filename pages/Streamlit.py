@@ -9,10 +9,15 @@ from PIL import Image
 import altair as alt
 
 ##############Snowflake Credentials
-
-user = os.environ.get('user')
-password = os.environ.get('password')
-account = os.environ.get('account')
+user_name_check = st.session_state['user_name1']
+if user_name_check != 'VARUN':
+    user = os.environ.get('user')
+    password = os.environ.get('password')
+    account = os.environ.get('account')
+else:
+    user = os.environ.get('other_user.user')
+    password = os.environ.get('other_user.password')
+    account = os.environ.get('other_user.account')
 
 st.set_page_config(
     page_title="Snowflake Client", layout='wide')
@@ -63,16 +68,16 @@ st.markdown(footer,unsafe_allow_html=True)
 
 ############Check Log in
 
-#try:
-    #account_name_fin = st.session_state['account_name']
-    #user_name1_fin = st.session_state['user_name1']
-    #password1_fin = st.session_state['password1']
-    #if user != user_name1_fin and password != password1_fin and account != account_name_fin:
-        #st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
-        #st.stop()  # App won't run anything after this line
-#except:
-     #st.warning("Please Login")
-     #st.stop()
+try:
+    account_name_fin = st.session_state['account_name']
+    user_name1_fin = st.session_state['user_name1']
+    password1_fin = st.session_state['password1']
+    if user != user_name1_fin and password != password1_fin and account != account_name_fin:
+        st.warning("You must log-in to see the content of this sensitive page! Head over to the log-in page.")
+        st.stop()  # App won't run anything after this line
+except:
+     st.warning("Please Login")
+     st.stop()
     
         
 ##To manage bug in sreamlit(Intialize button click)
