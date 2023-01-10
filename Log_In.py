@@ -9,41 +9,20 @@ user = os.environ.get('user')
 password = os.environ.get('password')
 account = os.environ.get('account')
 
+##Other user
+user_other = os.environ.get('other_user.user')
+password_other = os.environ.get('other_user.password')
+
 st.set_page_config(
-    page_title="Snowflake Client",
-    initial_sidebar_state="collapsed",)
-########Footer
-footer="""<style>
-a:link , a:visited{
-color: blue;
-background-color: #f2f4f5;
-}
-a:hover,  a:active {
-color: red;
-background-color: #f2f4f5;
-}
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: #f2f4f5;
-color: black;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p>Snowflake Client v 0.1 <a style='display: block; text-align: center;' href="https://www.infosys.com/" target="_blank">Infosys Technologies Limited</a></p>
-</div>
-"""
-st.markdown(footer,unsafe_allow_html=True)
+    page_title="Sign in to Snowflake ❄️",
+    page_icon="👋",
+)
 
 
-####Image 
 image = Image.open('Infosys_logo.JPG')
 image1 = image.resize((100, 60))
 st.image(image1)
-st.title("Sign In To Snowflake")
+st.title("Sign in to Snowflake")
 
 
 
@@ -78,21 +57,10 @@ def intro():
     user_name1 = st.text_input('User Name',label_visibility="visible")
 
     password1 = st.text_input('Password',label_visibility="visible",type='password')
-        
     #agree = st.button('Submit')
-    if st.button("Sign In"):
-        
-        if 'account_name' not in st.session_state:
-            st.session_state['account_name'] = account_name
-        
-        if 'user_name1' not in st.session_state:
-            st.session_state['user_name1'] = user_name1
+    if st.button("Sign in"):
+        if (user == user_name1 and password == password1 and account == account_name) or (user_other == user_name1 and password_other == password1 and account == account_name):
 
-        if 'password1' not in st.session_state:
-            st.session_state['password1'] = password1        
-    
-        if user == user_name1 and password == password1 and account == account_name:
-            
             st.write('Logged in Successfully')
             switch_page("Streamlit")
 
