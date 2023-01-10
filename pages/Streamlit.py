@@ -16,9 +16,9 @@ try:
         password = os.environ.get('password')
         account = os.environ.get('account')
     else:
-        user = os.environ.get('other_user.user')
-        password = os.environ.get('other_user.password')
-        account = os.environ.get('other_user.account')
+        user = os.environ.get('user_other')
+        password = os.environ.get('password_other')
+        account = os.environ.get('account')
     
     st.set_page_config(
         page_title="Snowflake Client", layout='wide')
