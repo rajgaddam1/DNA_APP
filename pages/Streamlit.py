@@ -1211,7 +1211,7 @@ if sel_ware == '-------------------' and sel_data == '-------------------' and s
             y = 'WAREHOUSE_NAME',
             x = 'CREDITS_USED_COMPUTE_SUM',
             color=alt.Color('WAREHOUSE_NAME', legend = None,))
-        text = bar_chart1.mark_text(align='left',baseline='middle',dx=3).encode(text='wheat:Q')
+        text = bar_chart1.mark_text(align='left',baseline='middle',dx=3).encode(text='CREDITS_USED_COMPUTE_SUM:Q')
         col1.altair_chart((bar_chart1 + text), theme=None, use_container_width=True)
         
         ######BAR CHART 2
