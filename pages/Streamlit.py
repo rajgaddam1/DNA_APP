@@ -9,18 +9,21 @@ from PIL import Image
 import altair as alt
 
 ##############Snowflake Credentials
-user_name_check = st.session_state['user_name1']
-if user_name_check != 'VARUN':
-    user = os.environ.get('user')
-    password = os.environ.get('password')
-    account = os.environ.get('account')
-else:
-    user = os.environ.get('other_user.user')
-    password = os.environ.get('other_user.password')
-    account = os.environ.get('other_user.account')
-
-st.set_page_config(
-    page_title="Snowflake Client", layout='wide')
+try:
+    user_name_check = st.session_state['user_name1']
+    if user_name_check != 'VARUN':
+        user = os.environ.get('user')
+        password = os.environ.get('password')
+        account = os.environ.get('account')
+    else:
+        user = os.environ.get('other_user.user')
+        password = os.environ.get('other_user.password')
+        account = os.environ.get('other_user.account')
+    
+    st.set_page_config(
+        page_title="Snowflake Client", layout='wide')
+except:
+     st.warning("Please Login")
 
 ##########Header and Footer
 hide_footer_style='''
