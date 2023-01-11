@@ -1087,7 +1087,8 @@ if sel_data != 'Create a Database' and sel_data !=  '-------------------':
             create_function(con, sel_data)
     if sel_fun != 'Create a Function' and sel_fun != '-------------------':
         st.subheader('Click the below button to drop '+ str(sel_fun) +' Function?')
-        if st.button('Drop Function'):
+        if st.button('Drop Function', on_click = callback) or st.session_state.key:
+            
             drop_function(con, sel_fun)
 
 
