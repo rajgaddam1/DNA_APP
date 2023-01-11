@@ -945,7 +945,7 @@ if sel_data == 'Create a Database':
     if st.button('Create New Database', on_click = callback) or st.session_state.key:
         create_data(con)
     
-    st.subheader('Click the below checkbox to Clone Existing Database')
+    st.subheader('Click the below check box to Clone Existing Database')
     agree1 = st.checkbox('Clone Database')
     if agree1:
         clone_data(con)
