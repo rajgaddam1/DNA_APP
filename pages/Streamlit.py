@@ -734,7 +734,7 @@ def get_dash4(_connector) -> pd.DataFrame:
     cmd = '''
 SELECT TOP 5 NAME, CREATED_ON,LAST_SUCCESS_LOGIN
 FROM SNOWFLAKE.ACCOUNT_USAGE.USERS 
-WHERE DELETED_ON IS NULL;'''
+WHERE DELETED_ON IS NULL AND DATEDIFF(day,last_success_login,CURRENT_DATE())>15'''
 
     return pd.read_sql(cmd, _connector)
 
